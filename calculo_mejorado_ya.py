@@ -4,9 +4,11 @@ from sys import orig_argv
 from lxml import etree
 from colorama import Fore, Style
 
+Token= "a0d9d68a166b6565e59872885d9bb2927abd03f00acdcadded548b96684dc93d"
+URL = "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/{{fecha_ini}}/{{fecha_fin}}?token={Token}}"
 # Cargar el archivo XML
 xml_string = open(
-    "/home/soporte-residentes/Documentos/Alfredo/sinsello.xml", "rb").read()
+    "/home/soporte-residentes/Documentos/Alfredo/node/cfdi1.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
@@ -155,7 +157,7 @@ if tipo_comprobante:
 
     if tipo == "T":
         if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
-            "Calculos para comercio exterior de traslados"
+            realizar_calculos_comercio_exterior()
         else:
             print(
                 Fore.RED + "Comprobante de tipo T sin complemento de comercio exterior." + Style.RESET_ALL)
