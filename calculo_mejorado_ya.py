@@ -6,6 +6,8 @@ from colorama import Fore, Style
 
 Token= "a0d9d68a166b6565e59872885d9bb2927abd03f00acdcadded548b96684dc93d"
 URL = "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/{{fecha_ini}}/{{fecha_fin}}?token={Token}}"
+
+
 # Cargar el archivo XML
 xml_string = open(
     "/home/soporte-residentes/Documentos/Alfredo/node/cfdi1.xml", "rb").read()
