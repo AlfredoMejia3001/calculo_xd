@@ -10,7 +10,7 @@ URL = "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/{{f
 
 # Cargar el archivo XML
 xml_string = open(
-    "/home/soporte-residentes/Documentos/Alfredo/node/cfdi1.xml", "rb").read()
+    "/home/soporte-residentes/Documentos/Tareas_Alfredo/cfdi.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
