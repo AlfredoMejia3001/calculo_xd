@@ -9,7 +9,8 @@ from colorama import Fore
 # pylint: disable=C0200
 # pylint: disable=W0621
 
-xml_string = open("/home/soporte-residentes/Documentos/Tareas_Alfredo/calculo_xd/pago.xml", "rb").read()
+xml_string = open(
+    "2024_52985_P_27352.xml", "rb").read()
 pregunta = input("Tipo de cfdi: ")
 if pregunta.lower() == 'c':
 
@@ -20,7 +21,8 @@ if pregunta.lower() == 'c':
     my_namespaces = xml_etree.nsmap
 
     # Obtener valor base
-    string_base = xml_etree.xpath(".//cfdi:Traslado/@Base", namespaces=my_namespaces)
+    string_base = xml_etree.xpath(
+        ".//cfdi:Traslado/@Base", namespaces=my_namespaces)
 
     # Conversión de tipos
     num_bases = [float(element) for element in string_base]
@@ -30,7 +32,8 @@ if pregunta.lower() == 'c':
     suma_base = sum(num_bases)
 
     # Obtener valor importe
-    string_import = xml_etree.xpath(".//cfdi:Traslado/@Importe", namespaces=my_namespaces)
+    string_import = xml_etree.xpath(
+        ".//cfdi:Traslado/@Importe", namespaces=my_namespaces)
 
     # Conversión de tipos
     num_import = [float(elementI) for elementI in string_import]
@@ -40,8 +43,10 @@ if pregunta.lower() == 'c':
     suma_imp = sum(num_import)
 
     # Cálculo de los valores importes
-    ValorUnitario_string = xml_etree.xpath(".//cfdi:Concepto/@ValorUnitario", namespaces=my_namespaces)
-    Cantidad_string = xml_etree.xpath(".//cfdi:Concepto/@Cantidad", namespaces=my_namespaces)
+    ValorUnitario_string = xml_etree.xpath(
+        ".//cfdi:Concepto/@ValorUnitario", namespaces=my_namespaces)
+    Cantidad_string = xml_etree.xpath(
+        ".//cfdi:Concepto/@Cantidad", namespaces=my_namespaces)
 
     ValorUnitario = [float(x) for x in ValorUnitario_string]
     Cantidad = [float(x) for x in Cantidad_string]
@@ -52,13 +57,14 @@ if pregunta.lower() == 'c':
     print(Fore.GREEN + "La Base es:", Base)
     print()
 
-
     bases_por_tasa = defaultdict(float)
     importe_por_tasa = defaultdict(float)
 
     # Importe
-    Base_string = xml_etree.xpath(".//cfdi:Traslado/@Base", namespaces=my_namespaces)
-    TasaOCuota_string = xml_etree.xpath(".//cfdi:Traslado/@TasaOCuota", namespaces=my_namespaces)
+    Base_string = xml_etree.xpath(
+        ".//cfdi:Traslado/@Base", namespaces=my_namespaces)
+    TasaOCuota_string = xml_etree.xpath(
+        ".//cfdi:Traslado/@TasaOCuota", namespaces=my_namespaces)
 
     BaseT = [float(x) for x in Base_string]
     TasaOCuota = [float(x) for x in TasaOCuota_string]
@@ -98,61 +104,59 @@ if pregunta.lower() == 'c':
 
 else:
 
-#para pagpos-------------------------------------------------------------------------------------------------------------------------------------------
+    # para pagpos-------------------------------------------------------------------------------------------------------------------------------------------
 
-    my_namespaces = { 'cfdi': 'http://www.sat.gob.mx/cfd/4', 'xsi': 'http://www.w3.org/2001/XMLSchema-instance', 'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital', 'pago20':'http://www.sat.gob.mx/Pagos20' }
+    my_namespaces = {'cfdi': 'http://www.sat.gob.mx/cfd/4', 'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+                     'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital', 'pago20': 'http://www.sat.gob.mx/Pagos20'}
 
     # crear objeto ElemenTree
     xml_etree = etree.fromstring(xml_string)
 
-    #asigna namespaces
+    # asigna namespaces
     my_namespaces = xml_etree.nsmap
 
-    #Obtener valor base
-    string_base = xml_etree.xpath(".//pago20:TrasladoDR/@BaseDR", namespaces=my_namespaces)
+    # Obtener valor base
+    string_base = xml_etree.xpath(
+        ".//pago20:TrasladoDR/@BaseDR", namespaces=my_namespaces)
 
-    #conversion de tipos
+    # conversion de tipos
     num_bases = []
     for element in string_base:
         num_bases.append(Decimal(element))
 
-    #elimina el valor totales de las bases e imprime
-    #num_bases.pop()
+    # elimina el valor totales de las bases e imprime
+    # num_bases.pop()
     suma_base = sum(num_bases)
-    #print(suma_base)
-    string_tipo = xml_etree.xpath(".//pago20:TrasladoDR/@TipoFactorDR", namespaces=my_namespaces)
-    print(string_tipo)
-    
-    if 'Exento'== string_tipo:
-        print("es exento")
-    else:
-        print("es tasa o cuota")
+    # print(suma_base)
 
-    string_import = xml_etree.xpath(".//pago20:TrasladoDR/@ImporteDR", namespaces=my_namespaces)
+    string_import = xml_etree.xpath(
+        ".//pago20:TrasladoDR/@ImporteDR", namespaces=my_namespaces)
 
-    #conversion de tipos
+    # conversion de tipos
     num_import = []
     for elementI in string_import:
         num_import.append(Decimal(elementI))
 
-    #elimina el valor totales de las bases e imprime
-    #num_import.pop()
+    # elimina el valor totales de las bases e imprime
+    # num_import.pop()
     suma_imp = sum(num_import)
-    #importe
-    Base_string = xml_etree.xpath(".//pago20:TrasladoDR/@BaseDR", namespaces=my_namespaces)
-    TasaOCuota_string = xml_etree.xpath(".//pago20:TrasladoDR/@TasaOCuotaDR", namespaces=my_namespaces)
-
+    # importe
+    Base_string = xml_etree.xpath(
+        ".//pago20:TrasladoDR/@BaseDR", namespaces=my_namespaces)
+    TasaOCuota_string = xml_etree.xpath(
+        ".//pago20:TrasladoDR/@TasaOCuotaDR", namespaces=my_namespaces)
 
     BaseT = ([Decimal(x) for x in Base_string])
     TasaOCuota = ([Decimal(x) for x in TasaOCuota_string])
-    #print(Base_string)
-    #print("Base", BaseT)
-    #print("TasaOCuota", TasaOCuota)
+    # print(Base_string)
+    # print("Base", BaseT)
+    # print("TasaOCuota", TasaOCuota)
 
-    importeT = [x*y for x,y in zip(BaseT,TasaOCuota)]
+    importeT = [x*y for x, y in zip(BaseT, TasaOCuota)]
     print("los importes son", importeT)
-    #baseP e importeP
-    EquivalenciaDR_string = xml_etree.xpath(".//pago20:DoctoRelacionado/@EquivalenciaDR", namespaces=my_namespaces)
+    # baseP e importeP
+    EquivalenciaDR_string = xml_etree.xpath(
+        ".//pago20:DoctoRelacionado/@EquivalenciaDR", namespaces=my_namespaces)
     EquivalenciaDR = ([Decimal(x) for x in EquivalenciaDR_string])
 
     ImporteP = [suma_imp/x for x in EquivalenciaDR]
@@ -178,50 +182,55 @@ else:
 
     print(Fore.RED, "La sumatoria de BaseP es: ", sumatoria, "=",  BaseP[0])
 
-    print(Fore.BLUE, "La sumatoria de ImporteP es: ", sumatoriaimporte, "=",  ImporteP[0])
-    
+    print(Fore.BLUE, "La sumatoria de ImporteP es: ",
+          sumatoriaimporte, "=",  ImporteP[0])
+
 
 def calculo_reten(xml_etree):
     """Calculo de retenciones CRP20"""
     print("=============================Retenciones=================================")
-            #Obtener valor base
-    string_base = xml_etree.xpath(".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
+    # Obtener valor base
+    string_base = xml_etree.xpath(
+        ".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
 
-        #conversion de tipos
+    # conversion de tipos
     num_bases = []
     for element in string_base:
         num_bases.append(Decimal(element))
 
-            #elimina el valor totales de las bases e imprime
-            #num_bases.pop()
+        # elimina el valor totales de las bases e imprime
+        # num_bases.pop()
     suma_base = sum(num_bases)
-            #print(suma_base)
+    # print(suma_base)
 
-    string_import = xml_etree.xpath(".//pago20:RetencionDR/@ImporteDR", namespaces=my_namespaces)
+    string_import = xml_etree.xpath(
+        ".//pago20:RetencionDR/@ImporteDR", namespaces=my_namespaces)
 
-            #conversion de tipos
+    # conversion de tipos
     num_import = []
     for elementI in string_import:
         num_import.append(Decimal(elementI))
 
-        #elimina el valor totales de las bases e imprime
-        #num_import.pop()
+        # elimina el valor totales de las bases e imprime
+        # num_import.pop()
         suma_imp = sum(num_import)
-        #importe
-        Base_string = xml_etree.xpath(".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
-        TasaOCuota_string = xml_etree.xpath(".//pago20:RetencionDR/@TasaOCuotaDR", namespaces=my_namespaces)
-
+        # importe
+        Base_string = xml_etree.xpath(
+            ".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
+        TasaOCuota_string = xml_etree.xpath(
+            ".//pago20:RetencionDR/@TasaOCuotaDR", namespaces=my_namespaces)
 
         BaseT = ([Decimal(x) for x in Base_string])
         TasaOCuota = ([Decimal(x) for x in TasaOCuota_string])
-        #print(Base_string)
-        #print("Base", BaseT)
-        #print("TasaOCuota", TasaOCuota)
+        # print(Base_string)
+        # print("Base", BaseT)
+        # print("TasaOCuota", TasaOCuota)
 
-        importeT = [x*y for x,y in zip(BaseT,TasaOCuota)]
-        #print("los importes son", importeT)
-        #baseP e importeP
-        EquivalenciaDR_string = xml_etree.xpath(".//pago20:DoctoRelacionado/@EquivalenciaDR", namespaces=my_namespaces)
+        importeT = [x*y for x, y in zip(BaseT, TasaOCuota)]
+        # print("los importes son", importeT)
+        # baseP e importeP
+        EquivalenciaDR_string = xml_etree.xpath(
+            ".//pago20:DoctoRelacionado/@EquivalenciaDR", namespaces=my_namespaces)
         EquivalenciaDR = ([Decimal(x) for x in EquivalenciaDR_string])
 
         ImporteP = [suma_imp/x for x in EquivalenciaDR]
@@ -240,16 +249,21 @@ def calculo_reten(xml_etree):
 
         sumatoriaimporte = '['
         for i in range(len(importeT)):
-            sumatoriaimporte += str(importeT[i]) + '/' + format(EquivalenciaDR[i])
+            sumatoriaimporte += str(importeT[i]) + \
+                '/' + format(EquivalenciaDR[i])
             if i != len(importeT) - 1:
                 sumatoriaimporte += ' + '
         sumatoriaimporte += ']'
 
-        print(Fore.RED, "La sumatoria de BaseP es: ", sumatoria, "=",  BaseP[0])
+        print(Fore.RED, "La sumatoria de BaseP es: ",
+              sumatoria, "=",  BaseP[0])
 
         print(Fore.BLUE, "La sumatoria de ImporteP es: ", sumatoriaimporte)
+
+
 if pregunta.lower() == 'p':
-    get_retenciones = xml_etree.xpath(".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
+    get_retenciones = xml_etree.xpath(
+        ".//pago20:RetencionDR/@BaseDR", namespaces=my_namespaces)
     if get_retenciones:
         print()
         calculo_reten(xml_string)

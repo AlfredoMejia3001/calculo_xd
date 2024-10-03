@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+__author__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
+__copyright__ = 'Copyright (c) 2024 FINKOK S.A. de C.V., Calculadora_Soporte'
+__credits__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
+__licence__ = 'Privativo'
+__version__ = '2.1'
+__maintainer__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
+__email__ = ['ljimenez@finkok.com', 'soporte@finkok.com']
+__status__ = 'Development'
+
 from collections import defaultdict
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -5,11 +17,12 @@ from lxml import etree
 from colorama import Fore, Style
 import math
 import requests
+from decimal import ROUND_HALF_UP
 
 
 # Cargar el archivo XML
 xml_string = open(
-    "/home/soporte-residentes/Documentos/Tareas_Alfredo/calculo_xd/pago.xml", "rb").read()
+    "2024_52985_P_27352.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
@@ -60,6 +73,32 @@ def obtener_tipo_cambio_api():
         else:
             print(f"Error: {response.status_code} - {response.text}")
     return None
+
+
+def redondeo(valor):
+    # Convertir el valor a cadena con dos decimales
+    valor_str = f"{valor:.5f}"
+    parte_entera, parte_decimal = valor_str.split('.')
+
+    # Aplicar la Regla 1 y 2
+    ultima_cifra = int(parte_decimal[2])  # Obtener la tercera cifra decimal
+    penultima_cifra = int(parte_decimal[1])  # Obtener la segunda cifra decimal
+
+    if ultima_cifra < 5:
+        # Regla 1: Si la última cifra es menor que 5, no modificar
+        return Decimal(parte_entera + '.' + parte_decimal[:2])
+
+    if ultima_cifra > 5:
+        # Regla 2: Si la última cifra es mayor que 5, redondear al alza
+        return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
+
+    # Reglas 3 y 4: Si la última cifra es 5
+    if penultima_cifra % 2 == 0:
+        # Regla 3: Si el penúltimo número es par, truncar
+        return Decimal(parte_entera + '.' + parte_decimal[:2])
+    else:
+        # Regla 4: Si el penúltimo número es impar, redondear al alza
+        return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
 
 
 def realizar_calculos_generales():
@@ -131,29 +170,125 @@ def realizar_calculos_generales():
 
 
 def realizar_calculos_pago():
-    print(Fore.GREEN + "\n-------------- Cálculos Pago ------------------" + Style.RESET_ALL)
+    print(Fore.GREEN + "-------------- Cálculos de Pagos --------------" + Style.RESET_ALL)
 
     BaseDR = [Decimal(x) for x in xml_etree.xpath(
-        ".//pago20:TrasladoDR/@BaseDR", namespaces=namespaces)]
-    TasaOCuotaDR = [Decimal(x) for x in xml_etree.xpath(
-        ".//pago20:TrasladoDR/@TasaOCuotaDR", namespaces=namespaces)]
-    ImporteDR_calculado = [round(base * tasa, 2)
-                           for base, tasa in zip(BaseDR, TasaOCuotaDR)]
-    ImporteDR_xml = [round(Decimal(x), 2) for x in xml_etree.xpath(
-        ".//pago20:TrasladoDR/@ImporteDR", namespaces=namespaces)]
+        ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@BaseDR", namespaces=namespaces)]
+    TasaOCuotaDR = xml_etree.xpath(
+        ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@TasaOCuotaDR", namespaces=namespaces)
+    ImporteDR_xml = xml_etree.xpath(
+        ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@ImporteDR", namespaces=namespaces)
+    TipoFactorDR = xml_etree.xpath(
+        ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@TipoFactorDR", namespaces=namespaces)
 
-    for idx, (base, tasa, imp_calc, imp_xml) in enumerate(zip(BaseDR, TasaOCuotaDR, ImporteDR_calculado, ImporteDR_xml)):
+    ImporteDR_calculado = []
+    for idx, tipo_factor in enumerate(TipoFactorDR):
+        print(Fore.YELLOW +
+              f"\n------------ TrasladoDR {idx + 1} ------------" + Style.RESET_ALL)
+        print(Fore.CYAN + f"BaseDR: {BaseDR[idx]}" + Style.RESET_ALL)
+
+        if tipo_factor == 'Exento':
+            print(Fore.CYAN +
+                  f"TipoFactorDR: {tipo_factor} (Exento)" + Style.RESET_ALL)
+            if idx < len(TasaOCuotaDR) or idx < len(ImporteDR_xml):
+                print(
+                    Fore.RED + f"Error: TrasladoDR {idx + 1} con TipoFactorDR 'Exento' no debe tener TasaOCuotaDR ni ImporteDR." + Style.RESET_ALL)
+            ImporteDR_calculado.append(Decimal('0.00'))
+
+        elif tipo_factor == 'Tasa':
+            if idx < len(TasaOCuotaDR):
+                tasa = Decimal(TasaOCuotaDR[idx])
+                base = BaseDR[idx]
+                imp_calc = round(base * tasa, 2)
+                ImporteDR_calculado.append(imp_calc)
+                print(Fore.CYAN + f"TasaOCuotaDR: {tasa}" + Style.RESET_ALL)
+                print(Fore.CYAN +
+                      f"Importe calculado: {imp_calc}" + Style.RESET_ALL)
+            else:
+                print(
+                    Fore.RED + f"Error: No se encontró TasaOCuotaDR para el TrasladoDR {idx + 1}" + Style.RESET_ALL)
+                ImporteDR_calculado.append(Decimal('0.00'))
+
+        else:
+            print(
+                Fore.RED + f"Error: TipoFactorDR {idx + 1} no válido." + Style.RESET_ALL)
+
+    # Convertir ImporteDR_xml a Decimal y redondear
+    ImporteDR_xml = [round(Decimal(x), 2) if x else Decimal('0.00')
+                     for x in ImporteDR_xml]
+
+    # Comparar ImporteDR calculado con ImporteDR del XML
+    for idx, (imp_calc, imp_xml) in enumerate(zip(ImporteDR_calculado, ImporteDR_xml)):
+        print(Fore.CYAN + f"ImporteDR del XML: {imp_xml}" + Style.RESET_ALL)
         if imp_calc != imp_xml:
             print(Fore.BLUE +
                   f"\nDiscrepancia detectada en el TrasladoDR {idx + 1}:")
             print(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
+        else:
+            print(
+                Fore.GREEN + f"Importe calculado y Importe del XML coinciden para el TrasladoDR {idx + 1}: {imp_calc}" + Style.RESET_ALL)
 
+    # Extraer el tipo de cambio
+    tipo_cambio_usd = Decimal(xml_etree.xpath(
+        ".//pago20:Pago/@TipoCambioP", namespaces=namespaces)[0])
+    print(Fore.GREEN +
+          f"Tipo de cambio USD: {tipo_cambio_usd}" + Style.RESET_ALL)
+
+    # Extraer el total de pagos desde el XML
     total_pago = Decimal(xml_etree.xpath(
         ".//pago20:Totales/@MontoTotalPagos", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
-    print(Fore.GREEN + "-----------------------------------------------\n" + Style.RESET_ALL)
+
+    # Extraer el valor de TotalTrasladosBaseIVA16 desde el XML
+    total_traslados_base_iva16 = Decimal(xml_etree.xpath(
+        ".//pago20:Totales/@TotalTrasladosBaseIVA16", namespaces=namespaces)[0])
+
+    # Calcular las equivalencias para los pagos
+    EquivalenciaDR_string = xml_etree.xpath(
+        ".//pago20:DoctoRelacionado/@EquivalenciaDR", namespaces=namespaces)
+    EquivalenciaDR = [Decimal(x) for x in EquivalenciaDR_string]
+
+    # Calcular BaseP e ImporteP
+    BaseP = [sum(BaseDR) / x for x in EquivalenciaDR]
+    ImporteP = [sum(ImporteDR_calculado) / x for x in EquivalenciaDR]
+
+    # Multiplicar BaseP[0] por el tipo de cambio
+    resultado_base_tipo_cambio = BaseP[0] * tipo_cambio_usd
+    resultado_redondeado = round(resultado_base_tipo_cambio, 2)
+
+    # Imprimir los resultados
+    print(Fore.GREEN + "--------------TrasladosP------------------------")
+    print(Fore.GREEN + f"BaseP es: {BaseP[0]}")
+    print(Fore.GREEN + f"ImporteP es: {ImporteP[0]}")
+    print(Fore.GREEN +
+          f"Resultado de BaseP * TipoCambioUSD (redondeado): {resultado_redondeado}")
+    print(Fore.GREEN +
+          f"TotalTrasladosBaseIVA16 del XML: {total_traslados_base_iva16}")
+
+    # Comparar con TotalTrasladosBaseIVA16
+    if resultado_redondeado != total_traslados_base_iva16:
+        print(
+            Fore.RED + f"Discrepancia: Resultado BaseP * TipoCambioUSD (redondeado): {resultado_redondeado} vs TotalTrasladosBaseIVA16: {total_traslados_base_iva16}" + Style.RESET_ALL)
+    else:
+        print(
+            Fore.GREEN + f"Los valores coinciden: {resultado_redondeado} == {total_traslados_base_iva16}" + Style.RESET_ALL)
+
+    print("------------------------------------------------")
+
+    # Crear las sumatorias para BaseP e ImporteP
+    sumatoria_base = '(' + ' + '.join(f"{base}/{equiv}" for base,
+                                      equiv in zip(BaseDR, EquivalenciaDR)) + ')'
+    sumatoria_importe = '(' + ' + '.join(f"{imp}/{equiv}" for imp,
+                                         equiv in zip(ImporteDR_calculado, EquivalenciaDR)) + ')'
+
+    print(
+        Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {BaseP[0]}")
+    print(Fore.BLUE +
+          f"La sumatoria de ImporteP es: {sumatoria_importe} = {ImporteP[0]}")
+
+    print(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
 
 
 def calcular_retenciones():
@@ -300,7 +435,6 @@ if tipo_comprobante:
 
     elif tipo in ["I", "E"]:
         realizar_calculos_generales()
-        realizar_calculos_comercio_exterior()
 
     elif tipo == 'P':
         realizar_calculos_pago()
