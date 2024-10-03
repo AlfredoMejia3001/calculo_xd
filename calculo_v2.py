@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 __author__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
 __copyright__ = 'Copyright (c) 2024 FINKOK S.A. de C.V., Calculadora_Soporte'
 __credits__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
@@ -22,7 +21,7 @@ from decimal import ROUND_HALF_UP
 
 # Cargar el archivo XML
 xml_string = open(
-    "2024_52985_P_27352.xml", "rb").read()
+    "/home/amejia/Documentos/EKU/cfdi_quick_1.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
