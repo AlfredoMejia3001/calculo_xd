@@ -1,17 +1,15 @@
 from collections import defaultdict
 from datetime import datetime, timedelta
 from decimal import Decimal
-from sys import orig_argv
 from lxml import etree
 from colorama import Fore, Style
 import math
-
 import requests
 
 
 # Cargar el archivo XML
 xml_string = open(
-    "/home/amejia/Documentos/calculo_xd/cce.xml", "rb").read()
+    "/home/soporte-residentes/Documentos/Tareas_Alfredo/calculo_xd/pago.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
@@ -23,7 +21,6 @@ namespaces = {
 
 
 def truncar(valor, decimales=2):
-    """Truncar un valor a un número de decimales especificado."""
     factor = Decimal(10) ** decimales
     return math.trunc(Decimal(valor) * factor) / factor
 

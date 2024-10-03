@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd"
+    xmlns:pago20="http://www.sat.gob.mx/Pagos20" Version="4.0" Serie="00" Folio="0000179826" Fecha="2024-10-03T00:00:00" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="01" LugarExpedicion="75700"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" NoCertificado="30001000000500003416" Certificado="MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=" Sello="lgNoa7h11CuWtO88Rm0whJihF73y2gbpWSempWLOL+F/iZ4ZVVbZcCaSnjtIaK5bfOsrCzh9SZwnfNhobufhmvW4okog5Pk8zWFcYgA7tlOpubPTVK/wmZkNo/FyF8OL17ovuGTS6t5rI3q1qRz7l9RPokVFGe032a0EMDQ6vn6po9s4b00BDCiszfm6SrFOyp2QyuUi3njnN+Q5AHo6irLWnr7wrNdLBGLRRFB9ix3zp5QcVqEmu+y8/CmOptAwe2C87Wvlx/S4Wi+HK70VCBIz5VGD+sijcyePzkfQ2+DJmAu7JoafHSWgUONNK4j71DsIU8CccQ92KpFo8cC2EQ==">
+    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601" />
+    <cfdi:Receptor Rfc="XAXX010101000" Nombre="PUBLICO GENERAL" DomicilioFiscalReceptor="75700" RegimenFiscalReceptor="616" UsoCFDI="CP01" />
+    <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01" />
+    </cfdi:Conceptos>
+    <cfdi:Complemento>
+        <pago20:Pagos Version="2.0">
+            <pago20:Totales TotalTrasladosBaseIVA16="10.00" TotalTrasladosImpuestoIVA16="1.60" TotalTrasladosBaseIVAExento="46.80" MontoTotalPagos="100.00" />
+            <pago20:Pago FechaPago="2022-09-09T17:33:38" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="100.00">
+                <pago20:DoctoRelacionado IdDocumento="b7c8d2bf-cb4e-4f84-af89-c68b6731206a" Serie="FA" Folio="N0000216349" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="2" ImpSaldoAnt="100.00" ImpPagado="100.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="46.80" ImpuestoDR="002" TipoFactorDR="Exento" />
+                            <pago20:TrasladoDR BaseDR="10.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000" ImporteDR="1.600000" />
+                            <pago20:TrasladoDR BaseDR="20.00" ImpuestoDR="003" TipoFactorDR="Exento" />
+                            <pago20:TrasladoDR BaseDR="20.00" ImpuestoDR="003" TipoFactorDR="Tasa" TasaOCuotaDR="0.080000" ImporteDR="1.600000" />
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:ImpuestosP>
+                    <pago20:TrasladosP>
+                        <pago20:TrasladoP BaseP="46.80" ImpuestoP="002" TipoFactorP="Exento" />
+                        <pago20:TrasladoP BaseP="20.00" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.080000" ImporteP="1.600000" />
+                        <pago20:TrasladoP BaseP="20.00" ImpuestoP="003" TipoFactorP="Exento" />
+                        <pago20:TrasladoP BaseP="10.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000" ImporteP="1.600000" />
+                    </pago20:TrasladosP>
+                </pago20:ImpuestosP>
+            </pago20:Pago>
+        </pago20:Pagos>
+    </cfdi:Complemento>
+</cfdi:Comprobante>

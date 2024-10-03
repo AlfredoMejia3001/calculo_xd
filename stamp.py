@@ -14,7 +14,7 @@ username = 'amejia@finkok.com.mx'
 password = 'yN8Q4vp,LPQQ6*y'
 
 # Leer el archivo XML y codificarlo en base64
-invoice_path = "cce.xml"
+invoice_path = "pago.xml"
 with open(invoice_path, 'r') as file:
     xml_content = file.read()
 xml_base64 = base64.b64encode(xml_content.encode('utf-8')).decode('utf-8')
