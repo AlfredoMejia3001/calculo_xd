@@ -12,6 +12,7 @@ __status__ = 'Development'
 from collections import defaultdict
 from datetime import datetime, timedelta
 from decimal import Decimal
+import logging
 from lxml import etree
 from colorama import Fore, Style
 import math
@@ -35,6 +36,12 @@ namespaces = {
 def truncar(valor, decimales=2):
     factor = Decimal(10) ** decimales
     return math.trunc(Decimal(valor) * factor) / factor
+import logging
+from datetime import datetime, timedelta
+import requests
+
+# Configurar el logging
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 def obtener_tipo_cambio_api():
     token = "a0d9d68a166b6565e59872885d9bb2927abd03f00acdcadded548b96684dc93d"
@@ -69,17 +76,21 @@ def obtener_tipo_cambio_api():
                     # Verificar si hay datos dentro de 'datos'
                     if 'datos' in serie and serie['datos']:
                         tipo_cambio_api = float(serie['datos'][0]['dato'])
-                        print(f"Tipo de cambio API Banxico: {tipo_cambio_api}")
+                        logging.info(f"Tipo de cambio API Banxico: {tipo_cambio_api}")
                         return tipo_cambio_api
                     else:
-                        print(f"No hay datos disponibles para la fecha: {fecha_ini}")
+                        logging.warning(f"No hay datos disponibles para la fecha: {fecha_ini}")
                 else:
-                    print("Formato inesperado en la respuesta de la API. Revisa la estructura.")
+                    logging.error("Formato inesperado en la respuesta de la API. Revisa la estructura.")
             except ValueError as e:
-                print(f"Error al decodificar JSON: {e}")
+                logging.error(f"Error al decodificar JSON: {e}")
         else:
-            print(f"Error en la solicitud: {response.status_code} - {response.text}")
+            logging.error(f"Error en la solicitud: {response.status_code} - {response.text}")
+    
     return None
+
+
+
 
 def redondeo(valor):
     # Convertir el valor a cadena con dos decimales
@@ -108,7 +119,7 @@ def redondeo(valor):
 
 
 def realizar_calculos_generales():
-    print(Fore.GREEN + "-------------- Cálculos Generales --------------" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "-------------- Cálculos Generales --------------" + Style.RESET_ALL)
 
     claves_prod_serv = xml_etree.xpath(
         ".//cfdi:Concepto/@ClaveProdServ", namespaces=namespaces)
@@ -128,7 +139,7 @@ def realizar_calculos_generales():
 
     for clave, base_calc, importe_calc, importe_xml in zip(claves_prod_serv, Base, importeT, xml_importes):
         if importe_calc != importe_xml:
-            print(
+            logging.info(
                 Fore.CYAN + f"\nDiscrepancia detectada en el producto con ClaveProdServ: " +
                 Fore.RED + f"{clave}" + Fore.BLUE +
                 f"\nBase calculada: " + Fore.GREEN + f"{base_calc}" + Fore.BLUE +
@@ -158,25 +169,25 @@ def realizar_calculos_generales():
 
     # Mostrar las discrepancias entre el total y el subtotal
     if round(subtotal, 2) != round(xml_subtotal, 2):
-        print(
+        logging.info(
             Fore.RED + f"Discrepancia en el subtotal: Calculado: {subtotal}, XML: {xml_subtotal}" + Style.RESET_ALL)
     if round(total_calculado, 2) != round(xml_total, 2):
-        print(
+        logging.info(
             Fore.RED + f"Discrepancia en el total: Calculado: {total_calculado}, XML: {xml_total}" + Style.RESET_ALL)
 
     # Mostrar la suma de impuestos (traslados y retenciones)
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"Suma total de impuestos trasladados: {total_traslados}" + Style.RESET_ALL)
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"Suma total de retenciones: {total_retenciones}" + Style.RESET_ALL)
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"Suma total de impuestos (traslados - retenciones): {total_calculado}" + Style.RESET_ALL)
 
-    print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
 
 
 def realizar_calculos_pago():
-    print(Fore.GREEN + "-------------- Cálculos de Pagos --------------" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "-------------- Cálculos de Pagos --------------" + Style.RESET_ALL)
 
     BaseDR = [Decimal(x) for x in xml_etree.xpath(
         ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@BaseDR", namespaces=namespaces)]
@@ -189,15 +200,15 @@ def realizar_calculos_pago():
 
     ImporteDR_calculado = []
     for idx, tipo_factor in enumerate(TipoFactorDR):
-        print(Fore.YELLOW +
+        logging.info(Fore.YELLOW +
               f"\n------------ TrasladoDR {idx + 1} ------------" + Style.RESET_ALL)
-        print(Fore.CYAN + f"BaseDR: {BaseDR[idx]}" + Style.RESET_ALL)
+        logging.info(Fore.CYAN + f"BaseDR: {BaseDR[idx]}" + Style.RESET_ALL)
 
         if tipo_factor == 'Exento':
-            print(Fore.CYAN +
+            logging.info(Fore.CYAN +
                   f"TipoFactorDR: {tipo_factor} (Exento)" + Style.RESET_ALL)
             if idx < len(TasaOCuotaDR) or idx < len(ImporteDR_xml):
-                print(
+                logging.info(
                     Fore.RED + f"Error: TrasladoDR {idx + 1} con TipoFactorDR 'Exento' no debe tener TasaOCuotaDR ni ImporteDR." + Style.RESET_ALL)
             ImporteDR_calculado.append(Decimal('0.00'))
 
@@ -207,16 +218,16 @@ def realizar_calculos_pago():
                 base = BaseDR[idx]
                 imp_calc = round(base * tasa, 2)
                 ImporteDR_calculado.append(imp_calc)
-                print(Fore.CYAN + f"TasaOCuotaDR: {tasa}" + Style.RESET_ALL)
-                print(Fore.CYAN +
+                logging.info(Fore.CYAN + f"TasaOCuotaDR: {tasa}" + Style.RESET_ALL)
+                logging.info(Fore.CYAN +
                       f"Importe calculado: {imp_calc}" + Style.RESET_ALL)
             else:
-                print(
+                logging.info(
                     Fore.RED + f"Error: No se encontró TasaOCuotaDR para el TrasladoDR {idx + 1}" + Style.RESET_ALL)
                 ImporteDR_calculado.append(Decimal('0.00'))
 
         else:
-            print(
+            logging.info(
                 Fore.RED + f"Error: TipoFactorDR {idx + 1} no válido." + Style.RESET_ALL)
 
     # Convertir ImporteDR_xml a Decimal y redondear
@@ -225,26 +236,26 @@ def realizar_calculos_pago():
 
     # Comparar ImporteDR calculado con ImporteDR del XML
     for idx, (imp_calc, imp_xml) in enumerate(zip(ImporteDR_calculado, ImporteDR_xml)):
-        print(Fore.CYAN + f"ImporteDR del XML: {imp_xml}" + Style.RESET_ALL)
+        logging.info(Fore.CYAN + f"ImporteDR del XML: {imp_xml}" + Style.RESET_ALL)
         if imp_calc != imp_xml:
-            print(Fore.BLUE +
+            logging.info(Fore.BLUE +
                   f"\nDiscrepancia detectada en el TrasladoDR {idx + 1}:")
-            print(
+            logging.info(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
         else:
-            print(
+            logging.info(
                 Fore.GREEN + f"Importe calculado y Importe del XML coinciden para el TrasladoDR {idx + 1}: {imp_calc}" + Style.RESET_ALL)
 
     # Extraer el tipo de cambio
     tipo_cambio_usd = Decimal(xml_etree.xpath(
         ".//pago20:Pago/@TipoCambioP", namespaces=namespaces)[0])
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"Tipo de cambio USD: {tipo_cambio_usd}" + Style.RESET_ALL)
 
     # Extraer el total de pagos desde el XML
     total_pago = Decimal(xml_etree.xpath(
         ".//pago20:Totales/@MontoTotalPagos", namespaces=namespaces)[0])
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
 
     # Extraer el valor de TotalTrasladosBaseIVA16 desde el XML
@@ -265,23 +276,23 @@ def realizar_calculos_pago():
     resultado_redondeado = round(resultado_base_tipo_cambio, 2)
 
     # Imprimir los resultados
-    print(Fore.GREEN + "--------------TrasladosP------------------------")
-    print(Fore.GREEN + f"BaseP es: {BaseP[0]}")
-    print(Fore.GREEN + f"ImporteP es: {ImporteP[0]}")
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN + "--------------TrasladosP------------------------")
+    logging.info(Fore.GREEN + f"BaseP es: {BaseP[0]}")
+    logging.info(Fore.GREEN + f"ImporteP es: {ImporteP[0]}")
+    logging.info(Fore.GREEN +
           f"Resultado de BaseP * TipoCambioUSD (redondeado): {resultado_redondeado}")
-    print(Fore.GREEN +
+    logging.info(Fore.GREEN +
           f"TotalTrasladosBaseIVA16 del XML: {total_traslados_base_iva16}")
 
     # Comparar con TotalTrasladosBaseIVA16
     if resultado_redondeado != total_traslados_base_iva16:
-        print(
+        logging.info(
             Fore.RED + f"Discrepancia: Resultado BaseP * TipoCambioUSD (redondeado): {resultado_redondeado} vs TotalTrasladosBaseIVA16: {total_traslados_base_iva16}" + Style.RESET_ALL)
     else:
-        print(
+        logging.info(
             Fore.GREEN + f"Los valores coinciden: {resultado_redondeado} == {total_traslados_base_iva16}" + Style.RESET_ALL)
 
-    print("------------------------------------------------")
+    logging.info("------------------------------------------------")
 
     # Crear las sumatorias para BaseP e ImporteP
     sumatoria_base = '(' + ' + '.join(f"{base}/{equiv}" for base,
@@ -289,12 +300,12 @@ def realizar_calculos_pago():
     sumatoria_importe = '(' + ' + '.join(f"{imp}/{equiv}" for imp,
                                          equiv in zip(ImporteDR_calculado, EquivalenciaDR)) + ')'
 
-    print(
+    logging.info(
         Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {BaseP[0]}")
-    print(Fore.BLUE +
+    logging.info(Fore.BLUE +
           f"La sumatoria de ImporteP es: {sumatoria_importe} = {ImporteP[0]}")
 
-    print(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
 
 
 def calcular_retenciones():
@@ -303,11 +314,11 @@ def calcular_retenciones():
         ".//pago20:RetencionDR", namespaces=namespaces)
 
     if not retenciones_exist:
-        print(
+        logging.info(
             Fore.CYAN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
         return  # No hay retenciones, no se realizan cálculos
 
-    print(Fore.GREEN + "-------------- Cálculos Retenciones --------------" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "-------------- Cálculos Retenciones --------------" + Style.RESET_ALL)
 
     BaseRetencionDR = [Decimal(x) for x in xml_etree.xpath(
         ".//pago20:RetencionDR/@BaseDR", namespaces=namespaces)]
@@ -320,18 +331,18 @@ def calcular_retenciones():
 
     for idx, (base, tasa, imp_calc, imp_xml) in enumerate(zip(BaseRetencionDR, TasaOCuotaRetencionDR, ImporteRetencionDR_calculado, ImporteRetencionDR_xml)):
         if imp_calc != imp_xml:
-            print(
+            logging.info(
                 Fore.RED + f"\nDiscrepancia detectada en la RetencionDR {idx + 1}:")
-            print(
+            logging.info(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
 
-    print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
 
 # Función para realizar cálculos relacionados con Comercio Exterior
 
 
 def realizar_calculos_comercio_exterior():
-    print(Fore.GREEN + "-------------- Cálculos Comercio Exterior --------------" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "-------------- Cálculos Comercio Exterior --------------" + Style.RESET_ALL)
 
     # Obtener el tipo de cambio desde el XML (ya integrado)
     try:
@@ -339,14 +350,14 @@ def realizar_calculos_comercio_exterior():
             ".//cce20:ComercioExterior/@TipoCambioUSD", namespaces=namespaces)
         if tipo_cambio_xml:
             tipo_cambio_xml = float(tipo_cambio_xml[0])
-            print(Fore.BLUE + f"Tipo de cambio XML (Comercio Exterior): " +
+            logging.info(Fore.BLUE + f"Tipo de cambio XML (Comercio Exterior): " +
                   Fore.YELLOW + f"{tipo_cambio_xml}" + Style.RESET_ALL)
         else:
-            print(
+            logging.info(
                 Fore.RED + "No se encontró el atributo TipoCambioUSD en el XML." + Style.RESET_ALL)
             return
     except Exception as e:
-        print(Fore.RED + f"Error al leer el XML: {e}" + Style.RESET_ALL)
+        logging.info(Fore.RED + f"Error al leer el XML: {e}" + Style.RESET_ALL)
         return
 
     # Obtener el tipo de cambio desde la API
@@ -354,12 +365,12 @@ def realizar_calculos_comercio_exterior():
 
     if tipo_cambio_api is not None:
         if tipo_cambio_xml == tipo_cambio_api:
-            print(Fore.GREEN + "Los tipos de cambio coinciden." + Style.RESET_ALL)
+            logging.info(Fore.GREEN + "Los tipos de cambio coinciden." + Style.RESET_ALL)
         else:
-            print(
+            logging.info(
                 Fore.RED + f"Los tipos de cambio NO coinciden. XML: " + Fore.YELLOW + f"{tipo_cambio_xml}" + Fore.RED + f", API: " + Fore.YELLOW + f"{tipo_cambio_api}" + Style.RESET_ALL)
     else:
-        print(
+        logging.info(
             Fore.RED + "No se pudo obtener el tipo de cambio de la API." + Style.RESET_ALL)
 
     # Validaciones adicionales para las mercancías
@@ -417,26 +428,26 @@ def realizar_calculos_comercio_exterior():
 
             # Validar que el valor de ValorDolares esté dentro de los límites
             if limite_inferior_truncado > valor_dolares or valor_dolares > limite_superior_redondeado:
-                print(
+                logging.info(
                     Fore.RED + f"El valor de ValorDolares (" + Fore.YELLOW + f"{valor_dolares}" + Fore.RED + f") está fuera de los límites para la mercancía con NoIdentificacion: {no_identificacion}." + Style.RESET_ALL)
-                print(Fore.CYAN + f"Limite inferior: " + Fore.YELLOW +
+                logging.info(Fore.CYAN + f"Limite inferior: " + Fore.YELLOW +
                       f"{limite_inferior_truncado}" + Fore.CYAN + f"--"+Fore.CYAN + f"Limite superior: "+Fore.YELLOW + f"{limite_superior_redondeado}")
 
-    print(Fore.GREEN + "--------------------------------------------------------" + Style.RESET_ALL)
+    logging.info(Fore.GREEN + "--------------------------------------------------------" + Style.RESET_ALL)
 
 
 # Verificar el tipo de comprobante y proceder
 tipo_comprobante = xml_etree.get("TipoDeComprobante")
 if tipo_comprobante:
     tipo = tipo_comprobante[0].upper()
-    print(Fore.CYAN +
+    logging.info(Fore.CYAN +
           f"Detectado comprobante de tipo {tipo}." + Style.RESET_ALL)
 
     if tipo == "T":
         if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
             realizar_calculos_comercio_exterior()
         else:
-            print(
+            logging.info(
                 Fore.RED + "Comprobante de tipo T sin complemento de comercio exterior." + Style.RESET_ALL)
 
     elif tipo in ["I", "E"]:
@@ -444,7 +455,7 @@ if tipo_comprobante:
             realizar_calculos_generales()
             realizar_calculos_comercio_exterior()
         else:
-           
+            
             realizar_calculos_generales()
 
     elif tipo == 'P':
@@ -452,6 +463,6 @@ if tipo_comprobante:
         calcular_retenciones()
 
     else:
-        print(Fore.RED + "Tipo de comprobante no identificado." + Style.RESET_ALL)
+        logging.info(Fore.RED + "Tipo de comprobante no identificado." + Style.RESET_ALL)
 else:
-    print(Fore.RED + "No se encontró el tipo de comprobante en el XML." + Style.RESET_ALL)
+    logging.info(Fore.RED + "No se encontró el tipo de comprobante en el XML." + Style.RESET_ALL)
