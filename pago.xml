@@ -1,33 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<cfdi:Comprobante xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd"
-    xmlns:pago20="http://www.sat.gob.mx/Pagos20" Version="4.0" Serie="00" Folio="0000179826" Fecha="2024-10-03T00:00:00" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="01" LugarExpedicion="75700"
-    xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" NoCertificado="30001000000500003416" Certificado="" Sello="">
-    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601" />
-    <cfdi:Receptor Rfc="XAXX010101000" Nombre="PUBLICO GENERAL" DomicilioFiscalReceptor="75700" RegimenFiscalReceptor="616" UsoCFDI="CP01" />
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+    xmlns:pago20="http://www.sat.gob.mx/Pagos20"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd" Version="4.0" Serie="P" Folio="2485" Fecha="2024-10-08T10:24:52" Sello="" Certificado="" NoCertificado="00001000000708618973" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" LugarExpedicion="25280" Exportacion="01">
+    <cfdi:Emisor Rfc="BRE040224UF0" Nombre="BS RENTALS" RegimenFiscal="601"/>
+    <cfdi:Receptor Rfc="AMP1601188R4" Nombre="ALFA MAQUINARIA Y PLATAFORMAS AEREAS" UsoCFDI="CP01" DomicilioFiscalReceptor="25205" RegimenFiscalReceptor="601"/>
     <cfdi:Conceptos>
-        <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01" />
+        <cfdi:Concepto ClaveProdServ="84111506" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
     </cfdi:Conceptos>
     <cfdi:Complemento>
-        <pago20:Pagos Version="2.0">
-            <pago20:Totales TotalTrasladosBaseIVA16="10.00" TotalTrasladosImpuestoIVA16="1.60" TotalTrasladosBaseIVAExento="46.80" MontoTotalPagos="100.00" />
-            <pago20:Pago FechaPago="2022-09-09T17:33:38" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="100.00">
-                <pago20:DoctoRelacionado IdDocumento="b7c8d2bf-cb4e-4f84-af89-c68b6731206a" Serie="FA" Folio="N0000216349" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="2" ImpSaldoAnt="100.00" ImpPagado="100.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+        <pago20:Pagos Version="2.0" xsi:schemaLocation="http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd">
+            <pago20:Totales MontoTotalPagos="101736.73" TotalTrasladosBaseIVA16="87704.07" TotalTrasladosImpuestoIVA16="14032.65"/>
+            <pago20:Pago FechaPago="2024-09-30T10:24:52" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.669" Monto="5172.44">
+                <pago20:DoctoRelacionado IdDocumento="3EE75606-CD0E-55A6-8D1A-6A5EFA4C521B" Folio="18003" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="1591.52" ImpPagado="1591.52" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
                     <pago20:ImpuestosDR>
                         <pago20:TrasladosDR>
-                            <pago20:TrasladoDR BaseDR="46.80" ImpuestoDR="002" TipoFactorDR="Exento" />
-                            <pago20:TrasladoDR BaseDR="10.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000" ImporteDR="1.600000" />
-                            <pago20:TrasladoDR BaseDR="20.00" ImpuestoDR="003" TipoFactorDR="Exento" />
-                            <pago20:TrasladoDR BaseDR="20.00" ImpuestoDR="003" TipoFactorDR="Tasa" TasaOCuotaDR="0.080000" ImporteDR="1.600000" />
+                            <pago20:TrasladoDR BaseDR="1372" ImporteDR="219.52" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="AF5532E7-FF24-5095-8992-0E9133EBFEF7" Folio="18004" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="397.88" ImpPagado="397.88" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="343" ImporteDR="54.88" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="ED5C92B4-8ED6-5D2E-9803-034516FAAEFF" Folio="18005" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="795.76" ImpPagado="795.76" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="686" ImporteDR="109.76" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="8C7BFD71-424A-53EF-B261-205AFD56DACB" Folio="18013" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="2387.28" ImpPagado="2387.28" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="2058" ImporteDR="329.28" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
                         </pago20:TrasladosDR>
                     </pago20:ImpuestosDR>
                 </pago20:DoctoRelacionado>
                 <pago20:ImpuestosP>
                     <pago20:TrasladosP>
-                        <pago20:TrasladoP BaseP="46.80" ImpuestoP="002" TipoFactorP="Exento" />
-                        <pago20:TrasladoP BaseP="20.00" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.080000" ImporteP="1.600000" />
-                        <pago20:TrasladoP BaseP="20.00" ImpuestoP="003" TipoFactorP="Exento" />
-                        <pago20:TrasladoP BaseP="10.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000" ImporteP="1.600000" />
+                        <pago20:TrasladoP BaseP="4459" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000" ImporteP="713.44"/>
                     </pago20:TrasladosP>
                 </pago20:ImpuestosP>
             </pago20:Pago>

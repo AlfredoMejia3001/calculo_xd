@@ -21,7 +21,7 @@ from decimal import ROUND_HALF_UP
 
 # Cargar el archivo XML
 xml_string = open(
-    "/home/soporte-residentes/Documentos/Tareas_Alfredo/cfdi.xml", "rb").read()
+    "pago.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
@@ -246,6 +246,18 @@ def realizar_calculos_pago():
         ".//pago20:Totales/@MontoTotalPagos", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
+# Comparar con TotalPagos
+    monto = Decimal(xml_etree.xpath(
+        ".//pago20:Pago/@Monto", namespaces=namespaces)[0])  
+    total_script = redondeo(monto * tipo_cambio_usd) 
+    print(Fore.GREEN +
+          f"Total de pagos según el script: {total_script}" + Style.RESET_ALL)
+    if total_script != total_pago:
+        print(
+            Fore.RED + f"Discrepancia: Resultado Monto * TipoCambioP (redondeado/truncado): {total_script} vs MontoTotalPagos: {total_pago}" + Style.RESET_ALL)
+    else:
+        print(
+            Fore.GREEN + f"Los valores coinciden: {total_script} == {total_pago}" + Style.RESET_ALL)
 
     # Extraer el valor de TotalTrasladosBaseIVA16 desde el XML
     total_traslados_base_iva16 = Decimal(xml_etree.xpath(
