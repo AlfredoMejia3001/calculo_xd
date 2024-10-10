@@ -21,7 +21,7 @@ from decimal import ROUND_HALF_UP
 
 # Cargar el archivo XML
 xml_string = open(
-    "pago.xml", "rb").read()
+    "/home/soporte-residentes/Documentos/Tareas_Alfredo/cfdi.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 
 namespaces = {
@@ -269,17 +269,17 @@ def realizar_calculos_pago():
     EquivalenciaDR = [Decimal(x) for x in EquivalenciaDR_string]
 
     # Calcular BaseP e ImporteP
-    BaseP = [sum(BaseDR) / x for x in EquivalenciaDR]
+    BaseP = ([sum(BaseDR) / x for x in EquivalenciaDR])
     ImporteP = [sum(ImporteDR_calculado) / x for x in EquivalenciaDR]
-
+    
     # Multiplicar BaseP[0] por el tipo de cambio
     resultado_base_tipo_cambio = BaseP[0] * tipo_cambio_usd
     resultado_redondeado = round(resultado_base_tipo_cambio, 2)
 
     # Imprimir los resultados
     print(Fore.GREEN + "--------------TrasladosP------------------------")
-    print(Fore.GREEN + f"BaseP es: {BaseP[0]}")
-    print(Fore.GREEN + f"ImporteP es: {ImporteP[0]}")
+    print(Fore.GREEN + f"BaseP es: {redondeo(BaseP[0])}")
+    print(Fore.GREEN + f"ImporteP es: {redondeo(ImporteP[0])}")
     print(Fore.GREEN +
           f"Resultado de BaseP * TipoCambioUSD (redondeado): {resultado_redondeado}")
     print(Fore.GREEN +
@@ -301,10 +301,11 @@ def realizar_calculos_pago():
     sumatoria_importe = '(' + ' + '.join(f"{imp}/{equiv}" for imp,
                                          equiv in zip(ImporteDR_calculado, EquivalenciaDR)) + ')'
 
+    
     print(
-        Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {BaseP[0]}")
+        Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {redondeo(BaseP[0])}")
     print(Fore.BLUE +
-          f"La sumatoria de ImporteP es: {sumatoria_importe} = {ImporteP[0]}")
+          f"La sumatoria de ImporteP es: {sumatoria_importe} = {redondeo(ImporteP[0])}")
 
     print(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
 
