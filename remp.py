@@ -147,12 +147,13 @@ def realizar_calculos_generales():
 
 
     nuevo_imp = str(importe_t[0])
-    print(Fore.CYAN + f"Importe del xml original: {xml_import[0]}" + Style.RESET_ALL)
     print(Fore.CYAN + f"Importe calculado: {nuevo_imp}" + Style.RESET_ALL)
     for elemento in xml_import:
-        elemento.set('Importe', nuevo_imp)  # Usar la cadena convertida
+        print(elemento.get('Importe'))  # Usar la cadena convertida
+        elemento.set('Importe', nuevo_imp)
+        print(elemento.get('Importe'))
         print(Fore.CYAN + f"Importe que debe estar en el XML: {elemento.get('Importe')}" + Style.RESET_ALL)
-        tree.write('prueba2.xml')
+    tree.write('prueba.xml')
 
     xml_str = etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8').decode('utf-8')
     print(xml_str)
