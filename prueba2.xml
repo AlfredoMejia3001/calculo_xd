@@ -1,19 +1,54 @@
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:implocal="http://www.sat.gob.mx/implocal" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/implocal http://www.sat.gob.mx/sitio_internet/cfd/implocal/implocal.xsd" Version="4.0" Serie="F" Folio="0076" Fecha="2024-10-11T11:47:30" FormaPago="03" NoCertificado="30001000000500003416" SubTotal="948.28" Descuento="0" Moneda="MXN" TipoCambio="1" Total="1100.00" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="11700" Sello="" Certificado="">
-    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
-    <cfdi:Receptor Rfc="TORP660827ME0" Nombre="PATRICIA DE LOURDES TORRE RODRIGUEZ" DomicilioFiscalReceptor="10200" RegimenFiscalReceptor="626" UsoCFDI="G03"/>
+<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pago20="http://www.sat.gob.mx/Pagos20"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd" Version="4.0" Serie="CPPO" Folio="3649" Exportacion="01" Fecha="2024-10-15T17:06:14" Sello="ULLY7R5K/h8j14ffKnSr1XCNkFzQUvh34HpD43l8fGvsn6jx5BUlGT6PsixmC8GisModtHHws0fYvKfjoUgV/bETtanVxGSFBZDjkUj+b/BjJ5yLiQ6NBBBp1q92BmQRN9awIZxSpP3XB6voL2cfhJn5KafIDmKzZLXkNNf9QWep/o2Yn5ohqyPRpPgnZED9PcE4KfvYkn/PdBc7pLINMigZgZPBPUiBlcZKvNrMaKOxHt3rTALRIfHkIQgS+B9p//D76n5FgeeAUxFFtpoJmzHqS8gnXmoJSgNi4bWGpRc742ea63Vsl5NlfXDB1Ylh9OF6jbxjebzJYaR/F0X8uw==" NoCertificado="00001000000510519356" Certificado="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" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" LugarExpedicion="70380">
+    <cfdi:Emisor Rfc="PCC2109303N4" Nombre="PLAZAS COMERCIALES CRUZ AZUL" RegimenFiscal="601"/>
+    <cfdi:Receptor Nombre="HOSPITALES CRUZ AZUL" Rfc="HCA2109308T4" UsoCFDI="CP01" DomicilioFiscalReceptor="04700" RegimenFiscalReceptor="601"/>
     <cfdi:Conceptos>
-        <cfdi:Concepto ClaveProdServ="78181703" NoIdentificacion="001" Cantidad="1" ClaveUnidad="E48" Unidad="E48" Descripcion="BLOCK DE CORT. DE ESTACIONAMIENTO" ValorUnitario="948.280" Importe="948.280" Descuento="0.000" ObjetoImp="02">
-            <cfdi:Impuestos>
-                <cfdi:Traslados>
-                    <cfdi:Traslado Base="948.280" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="151.725"/>
-                </cfdi:Traslados>
-            </cfdi:Impuestos>
-        </cfdi:Concepto>
+        <cfdi:Concepto Importe="0" ValorUnitario="0" Descripcion="Pago" ClaveUnidad="ACT" Cantidad="1" ClaveProdServ="84111506" ObjetoImp="01"/>
     </cfdi:Conceptos>
-    <cfdi:Impuestos TotalImpuestosTrasladados="151.72">
-        <cfdi:Traslados>
-            <cfdi:Traslado Base="948.28" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="151.72"/>
-        </cfdi:Traslados>
-    </cfdi:Impuestos>
-    <cfdi:Complemento/>
+    <cfdi:Complemento>
+        <pago20:Pagos Version="2.0">
+            <pago20:Totales MontoTotalPagos="25078.22" TotalTrasladosBaseIVA0="23107.71" TotalTrasladosBaseIVA16="1698.70" TotalTrasladosImpuestoIVA0="0.00" TotalTrasladosImpuestoIVA16="271.80"/>
+            <pago20:Pago CtaBeneficiario="012180001180438250" RfcEmisorCtaBen="BBA830831LJ2" FechaPago="2023-12-14T12:00:00" TipoCambioP="1" Monto="25078.22" FormaDePagoP="03" MonedaP="MXN">
+                <pago20:DoctoRelacionado IdDocumento="C53D52AB-13F9-594C-9A00-817C4311973D" MonedaDR="MXN" EquivalenciaDR="1" Folio="2342" ObjetoImpDR="02" ImpSaldoInsoluto="0.00" Serie="PCELO" ImpPagado="620.08" NumParcialidad="1" ImpSaldoAnt="620.08">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="620.08" ImporteDR="0.00" ImpuestoDR="002" TasaOCuotaDR="0.000000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="2F74F10F-65FA-5B1F-A5CE-6DA964F967A0" MonedaDR="MXN" EquivalenciaDR="1" Folio="2349" ObjetoImpDR="02" ImpSaldoInsoluto="0.00" Serie="PCELO" ImpPagado="8609.52" NumParcialidad="1" ImpSaldoAnt="8609.52">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="8609.52" ImporteDR="0.00" ImpuestoDR="002" TasaOCuotaDR="0.000000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="841E3660-0CB1-59EA-B026-4E8600ED4C11" MonedaDR="MXN" EquivalenciaDR="1" Folio="2366" ObjetoImpDR="02" ImpSaldoInsoluto="0.00" Serie="PCELO" ImpPagado="13061.27" NumParcialidad="1" ImpSaldoAnt="13061.27">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="11421.27" ImporteDR="0.00" ImpuestoDR="002" TasaOCuotaDR="0.000000" TipoFactorDR="Tasa"/>
+                            <pago20:TrasladoDR BaseDR="616.67" ImporteDR="49.33" ImpuestoDR="003" TasaOCuotaDR="0.080000" TipoFactorDR="Tasa"/>
+                            <pago20:TrasladoDR BaseDR="1413.79" ImporteDR="226.21" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:DoctoRelacionado IdDocumento="86C94B4A-7719-5F67-AB6D-885598A68263" MonedaDR="MXN" EquivalenciaDR="1" Folio="2400" ObjetoImpDR="02" ImpSaldoInsoluto="0.00" Serie="PCELO" ImpPagado="2787.35" NumParcialidad="1" ImpSaldoAnt="2787.35">
+                    <pago20:ImpuestosDR>
+                        <pago20:TrasladosDR>
+                            <pago20:TrasladoDR BaseDR="2456.84" ImporteDR="0.00" ImpuestoDR="002" TasaOCuotaDR="0.000000" TipoFactorDR="Tasa"/>
+                            <pago20:TrasladoDR BaseDR="284.91" ImporteDR="45.59" ImpuestoDR="002" TasaOCuotaDR="0.160000" TipoFactorDR="Tasa"/>
+                        </pago20:TrasladosDR>
+                    </pago20:ImpuestosDR>
+                </pago20:DoctoRelacionado>
+                <pago20:ImpuestosP>
+                    <pago20:TrasladosP>
+                        <pago20:TrasladoP BaseP="23107.71" ImporteP="0.00" ImpuestoP="002" TasaOCuotaP="0.000000" TipoFactorP="Tasa"/>
+                        <pago20:TrasladoP BaseP="616.67" ImporteP="49.33" ImpuestoP="003" TasaOCuotaP="0.080000" TipoFactorP="Tasa"/>
+                        <pago20:TrasladoP BaseP="1698.70" ImporteP="271.80" ImpuestoP="002" TasaOCuotaP="0.160000" TipoFactorP="Tasa"/>
+                    </pago20:TrasladosP>
+                </pago20:ImpuestosP>
+            </pago20:Pago>
+        </pago20:Pagos>
+    </cfdi:Complemento>
 </cfdi:Comprobante>

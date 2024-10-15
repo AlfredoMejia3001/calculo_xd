@@ -15,7 +15,6 @@ from decimal import Decimal
 from lxml import etree
 from colorama import Fore, Style
 import math
-import lxml
 import requests
 from decimal import ROUND_HALF_UP
 
@@ -151,6 +150,7 @@ def realizar_calculos_generales():
     xml_subtotal = float(xml_etree.get("SubTotal"))
     xml_total = float(xml_etree.get("Total"))
 
+
     # Sumar los importes de las retenciones si existen
     retenciones_exist = xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Retenciones/cfdi:Retencion", namespaces=namespaces)
@@ -169,13 +169,28 @@ def realizar_calculos_generales():
     if round(subtotal, 2) != round(xml_subtotal, 2):
         print(
             Fore.RED + f"Discrepancia en el subtotal: Calculado: {subtotal}, XML: {xml_subtotal}" + Style.RESET_ALL)
+        xml_etree.set('SubTotal', str(subtotal))
     if round(total_calculado, 2) != round(xml_total, 2):
         print(
             Fore.RED + f"Discrepancia en el total: Calculado: {total_calculado}, XML: {xml_total}" + Style.RESET_ALL)
-
+        xml_etree.set('Total', str(total_calculado))
     # Mostrar la suma de impuestos (traslados y retenciones)
+    
+    tras = xml_etree.xpath('.//cfdi:Impuestos/@TotalImpuestosTrasladados', namespaces=namespaces)
+    tras1 = xml_etree.xpath('.//cfdi:Impuestos', namespaces=namespaces)
+
+  
+    trasla = str(total_traslados)
+
+    if total_traslados != tras:
+        print("Discrepancia en TotalImpuestosTrasladados", trasla)
+        first_element = tras1[-1]
+        first_element.set('TotalImpuestosTrasladados', trasla)
+     
     print(Fore.GREEN +
           f"Suma total de impuestos trasladados: {total_traslados}" + Style.RESET_ALL)
+        
+        
     print(Fore.GREEN +
           f"Suma total de retenciones: {total_retenciones}" + Style.RESET_ALL)
     print(Fore.GREEN +
@@ -184,7 +199,7 @@ def realizar_calculos_generales():
     print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
 
     # Guardar el XML modificado en un nuevo archivo
-    with open("prueba_modificada.xml", "wb") as f:
+    with open("cfdi_modificado.xml", "wb") as f:
         f.write(etree.tostring(xml_etree, pretty_print=True,
                 xml_declaration=True, encoding='UTF-8'))
     print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
