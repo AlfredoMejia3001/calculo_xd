@@ -132,7 +132,7 @@ def realizar_calculos_generales():
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
 
-    for clave, base_calc, importe_calc, importe_xml in zip(claves_prod_serv, Base, importeT, xml_importes):
+    for clave, base_calc, importe_calc, importe_xml, nodo in zip(claves_prod_serv, Base, importeT, xml_importes, xml_etree.xpath(".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)):
         if importe_calc != importe_xml:
             print(
                 Fore.CYAN + f"\nDiscrepancia detectada en el producto con ClaveProdServ: " +
@@ -142,25 +142,14 @@ def realizar_calculos_generales():
                 f", Importe en XML: " + Fore.RED +
                 f"{importe_xml}" + Style.RESET_ALL
             )
-    importe_t = [b * TasaOCuota[0] for b in BaseT]
+            # Actualiza el atributo Importe en el nodo correspondiente
+            # Actualiza el Importe con el valor calculado
+            nodo.set('Importe', str(importe_calc))
+
     subtotal = round(sum(Base), 2)
     total_traslados = round(sum(importeT), 2)
     xml_subtotal = float(xml_etree.get("SubTotal"))
     xml_total = float(xml_etree.get("Total"))
-
-    nodo = xml_etree.find(
-        './/cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado', namespaces)
-
-    if nodo is not None:
-        atributo_importe = nodo.get('Importe')  # Obtiene el valor del atributo
-        nuevo_valor = '123.45'  # Define el nuevo valor para el atributo
-        # Reemplaza el atributo original con el nuevo
-        nodo.set('Importe', nuevo_valor)
-
-    with open("prueba_modificada.xml", "wb") as f:
-        f.write(etree.tostring(xml_etree, pretty_print=True,
-                xml_declaration=True, encoding='UTF-8'))
-    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
 
     # Sumar los importes de las retenciones si existen
     retenciones_exist = xml_etree.xpath(
@@ -176,9 +165,6 @@ def realizar_calculos_generales():
 
     total_calculado = round(subtotal + total_traslados - total_retenciones, 2)
 
-    if redondeo(importe_t[0]) != importeT:
-        print(
-            Fore.RED + f"Discrepancia en el importe: Calculado: {importe_t}, XML: {xml_importes}" + Style.RESET_ALL)
     # Mostrar las discrepancias entre el total y el subtotal
     if round(subtotal, 2) != round(xml_subtotal, 2):
         print(
@@ -196,6 +182,12 @@ def realizar_calculos_generales():
           f"Suma total de impuestos (traslados - retenciones): {total_calculado}" + Style.RESET_ALL)
 
     print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
+
+    # Guardar el XML modificado en un nuevo archivo
+    with open("prueba_modificada.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
 
 
 def realizar_calculos_pago():
