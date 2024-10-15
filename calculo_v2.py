@@ -24,7 +24,6 @@ from decimal import ROUND_HALF_UP
 xml_string = open(
     "prueba.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
-tree = etree.parse('prueba.xml')
 namespaces = {
     'cfdi': 'http://www.sat.gob.mx/cfd/4',
     'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
@@ -36,6 +35,7 @@ namespaces = {
 def truncar(valor, decimales=2):
     factor = Decimal(10) ** decimales
     return math.trunc(Decimal(valor) * factor) / factor
+
 
 def obtener_tipo_cambio_api():
     token = "a0d9d68a166b6565e59872885d9bb2927abd03f00acdcadded548b96684dc93d"
@@ -53,7 +53,8 @@ def obtener_tipo_cambio_api():
         fecha_fin = format  # Fecha actual
 
         # Formatear la URL
-        formatted_url = url.format(fecha_ini=fecha_ini, fecha_fin=fecha_fin, token=token)
+        formatted_url = url.format(
+            fecha_ini=fecha_ini, fecha_fin=fecha_fin, token=token)
 
         # Realizar la solicitud GET
         response = requests.get(formatted_url)
@@ -73,14 +74,18 @@ def obtener_tipo_cambio_api():
                         print(f"Tipo de cambio API Banxico: {tipo_cambio_api}")
                         return tipo_cambio_api
                     else:
-                        print(f"No hay datos disponibles para la fecha: {fecha_ini}")
+                        print(
+                            f"No hay datos disponibles para la fecha: {fecha_ini}")
                 else:
-                    print("Formato inesperado en la respuesta de la API. Revisa la estructura.")
+                    print(
+                        "Formato inesperado en la respuesta de la API. Revisa la estructura.")
             except ValueError as e:
                 print(f"Error al decodificar JSON: {e}")
         else:
-            print(f"Error en la solicitud: {response.status_code} - {response.text}")
+            print(
+                f"Error en la solicitud: {response.status_code} - {response.text}")
     return None
+
 
 def redondeo(valor):
     # Convertir el valor a cadena con dos decimales
@@ -126,9 +131,7 @@ def realizar_calculos_generales():
     importeT = [round(x * y, 2) for x, y in zip(BaseT, TasaOCuota)]
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
-    xml_import = xml_etree.xpath(
-        ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)
-  
+
     for clave, base_calc, importe_calc, importe_xml in zip(claves_prod_serv, Base, importeT, xml_importes):
         if importe_calc != importe_xml:
             print(
@@ -139,11 +142,25 @@ def realizar_calculos_generales():
                 f", Importe en XML: " + Fore.RED +
                 f"{importe_xml}" + Style.RESET_ALL
             )
-    importe_t = [b * TasaOCuota[0] for b in BaseT]    
+    importe_t = [b * TasaOCuota[0] for b in BaseT]
     subtotal = round(sum(Base), 2)
     total_traslados = round(sum(importeT), 2)
     xml_subtotal = float(xml_etree.get("SubTotal"))
     xml_total = float(xml_etree.get("Total"))
+
+    nodo = xml_etree.find(
+        './/cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado', namespaces)
+
+    if nodo is not None:
+        atributo_importe = nodo.get('Importe')  # Obtiene el valor del atributo
+        nuevo_valor = '123.45'  # Define el nuevo valor para el atributo
+        # Reemplaza el atributo original con el nuevo
+        nodo.set('Importe', nuevo_valor)
+
+    with open("prueba_modificada.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
 
     # Sumar los importes de las retenciones si existen
     retenciones_exist = xml_etree.xpath(
@@ -180,7 +197,7 @@ def realizar_calculos_generales():
 
     print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
 
-    
+
 def realizar_calculos_pago():
     print(Fore.GREEN + "-------------- Cálculos de Pagos --------------" + Style.RESET_ALL)
 
@@ -254,8 +271,8 @@ def realizar_calculos_pago():
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
 # Comparar con TotalPagos
     monto = Decimal(xml_etree.xpath(
-        ".//pago20:Pago/@Monto", namespaces=namespaces)[0])  
-    total_script = redondeo(monto * tipo_cambio_usd) 
+        ".//pago20:Pago/@Monto", namespaces=namespaces)[0])
+    total_script = redondeo(monto * tipo_cambio_usd)
     print(Fore.GREEN +
           f"Total de pagos según el script: {total_script}" + Style.RESET_ALL)
     if total_script != total_pago:
@@ -277,7 +294,7 @@ def realizar_calculos_pago():
     # Calcular BaseP e ImporteP
     BaseP = ([sum(BaseDR) / x for x in EquivalenciaDR])
     ImporteP = [sum(ImporteDR_calculado) / x for x in EquivalenciaDR]
-    
+
     # Multiplicar BaseP[0] por el tipo de cambio
     resultado_base_tipo_cambio = BaseP[0] * tipo_cambio_usd
     resultado_redondeado = round(resultado_base_tipo_cambio, 2)
@@ -307,7 +324,6 @@ def realizar_calculos_pago():
     sumatoria_importe = '(' + ' + '.join(f"{imp}/{equiv}" for imp,
                                          equiv in zip(ImporteDR_calculado, EquivalenciaDR)) + ')'
 
-    
     print(
         Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {redondeo(BaseP[0])}")
     print(Fore.BLUE +
@@ -463,7 +479,7 @@ if tipo_comprobante:
             realizar_calculos_generales()
             realizar_calculos_comercio_exterior()
         else:
-           
+
             realizar_calculos_generales()
 
     elif tipo == 'P':
