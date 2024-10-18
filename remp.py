@@ -22,7 +22,7 @@ from decimal import ROUND_HALF_UP
 
 # Cargar el archivo XML
 xml_string = open(
-    "prueba.xml", "rb").read()
+    "prueba2.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 tree = etree.parse('prueba.xml')
 namespaces = {
@@ -126,9 +126,7 @@ def realizar_calculos_generales():
     importeT = [round(x * y, 2) for x, y in zip(BaseT, TasaOCuota)]
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
-    xml_import = xml_etree.xpath(
-        ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)
-  
+   
     for clave, base_calc, importe_calc, importe_xml in zip(claves_prod_serv, Base, importeT, xml_importes):
         if importe_calc != importe_xml:
             print(
@@ -146,17 +144,6 @@ def realizar_calculos_generales():
     xml_total = float(xml_etree.get("Total"))
 
 
-    nuevo_imp = str(importe_t[0])
-    print(Fore.CYAN + f"Importe calculado: {nuevo_imp}" + Style.RESET_ALL)
-    for elemento in xml_import:
-        print(elemento.get('Importe'))  # Usar la cadena convertida
-        elemento.set('Importe', nuevo_imp)
-        print(elemento.get('Importe'))
-        print(Fore.CYAN + f"Importe que debe estar en el XML: {elemento.get('Importe')}" + Style.RESET_ALL)
-    tree.write('prueba.xml')
-
-    xml_str = etree.tostring(tree, pretty_print=True, xml_declaration=True, encoding='UTF-8').decode('utf-8')
-    print(xml_str)
     # Sumar los importes de las retenciones si existen
     retenciones_exist = xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Retenciones/cfdi:Retencion", namespaces=namespaces)

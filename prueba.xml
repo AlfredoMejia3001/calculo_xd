@@ -1,18 +1,46 @@
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:implocal="http://www.sat.gob.mx/implocal" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/implocal http://www.sat.gob.mx/sitio_internet/cfd/implocal/implocal.xsd" Version="4.0" Serie="F" Folio="0076" Fecha="2024-10-11T11:47:30" FormaPago="03" NoCertificado="30001000000500003416" SubTotal="998.28" Descuento="0" Moneda="MXN" TipoCambio="1" Total="1190.00" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="11700" Sello="" Certificado="">
-    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
-    <cfdi:Receptor Rfc="TORP660827ME0" Nombre="PATRICIA DE LOURDES TORRE RODRIGUEZ" DomicilioFiscalReceptor="10200" RegimenFiscalReceptor="626" UsoCFDI="G03"/>
-    <cfdi:Conceptos>
-        <cfdi:Concepto ClaveProdServ="78181703" NoIdentificacion="001" Cantidad="1" ClaveUnidad="E48" Unidad="E48" Descripcion="BLOCK DE CORT. DE ESTACIONAMIENTO" ValorUnitario="948.280" Importe="948.280" Descuento="0.000" ObjetoImp="02">
-            <cfdi:Impuestos>
-                <cfdi:Traslados>
-                    <cfdi:Traslado Base="948.280" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="151.725"/>
-                </cfdi:Traslados>
-            </cfdi:Impuestos>
-        </cfdi:Concepto>
-    </cfdi:Conceptos>
-    <cfdi:Impuestos TotalImpuestosTrasladados="15.72">
-        <cfdi:Traslados>
-            <cfdi:Traslado Base="948.28" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="151.72"/>
-        </cfdi:Traslados>
-    </cfdi:Impuestos>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:cce20="http://www.sat.gob.mx/ComercioExterior20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd" Version="4.0" Sello="hpdq6F3NrofjYkJlvSbQskGreVUINx0lX8stc1/+GGFgDwvZjO425GOK7mLHtT864R48BtO4Tt9iQpJLdi1T1slLgJoB0rplnBjsYeFZrKDsPRBWu5Y9rm910c4TgXzKlACzTdWFmqi2CAaGKIRRbwduazFCGsS5J1W2auUnG+bv10XiHWvMcbd8aOc34MtEul9Ikh3TmQnz+JcSq152Ik1AterlRGlKQITMrfMM9TT0YFNiU1B363Bt/U699/Tsm1Xr1ftrULMJO9ATI23BZqLnFKGWdqE8UP981ppIttQpZlBaBK9Oni2+CnWX+fmGYhtCCh5xA2Xn+AyOVjHJ/A==" Fecha="2024-10-16T23:59:00" Folio="529" Serie="INV/2024/" FormaPago="03" NoCertificado="00001000000707375193" Certificado="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" CondicionesDePago="Pago inmediato" SubTotal="3565.52" Moneda="MXN" Total="4136.00" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="27023">
+<cfdi:Emisor Rfc="SAM211109ND2" Nombre="SERVICIOS AUTOMOTRICES MARGON" RegimenFiscal="626"/>
+<cfdi:Receptor Rfc="HPA171116E44" Nombre="HL PAVIMENTOS" DomicilioFiscalReceptor="54060" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
+<cfdi:Conceptos>
+<cfdi:Concepto ClaveProdServ="25172000" NoIdentificacion="H-87" Cantidad="2.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="[H-87] BIELETA" ValorUnitario="725.00" Importe="1450.00" ObjetoImp="02">
+<cfdi:Impuestos>
+<cfdi:Traslados>
+<cfdi:Traslado Base="1450.00" Importe="232.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
+</cfdi:Concepto>
+<cfdi:Concepto ClaveProdServ="25172000" NoIdentificacion="1108003" Cantidad="2.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="[1108003] TERMINAL EXTERIOR" ValorUnitario="725.00" Importe="1450.00" ObjetoImp="02">
+<cfdi:Impuestos>
+<cfdi:Traslados>
+<cfdi:Traslado Base="1450.00" Importe="232.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
+</cfdi:Concepto>
+<cfdi:Concepto ClaveProdServ="76122405" Cantidad="1.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="SERVICIO DE ALINEACIÓN Y BALANCEO" ValorUnitario="585.51" Importe="585.51" ObjetoImp="02">
+<cfdi:Impuestos>
+<cfdi:Traslados>
+<cfdi:Traslado Base="585.51" Importe="93.68" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
+</cfdi:Concepto>
+<cfdi:Concepto ClaveProdServ="15121800" NoIdentificacion="ECO-115-P" Cantidad="1.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="pipi" ValorUnitario="80.00" Importe="80.00" ObjetoImp="02">
+<cfdi:Impuestos>
+<cfdi:Traslados>
+<cfdi:Traslado Base="80.00" Importe="12.80" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
+</cfdi:Concepto>
+<cfdi:Concepto ClaveProdServ="78181500" NoIdentificacion="LAVADO GRATIS" Cantidad="1.000000" ClaveUnidad="E48" Unidad="UNIDAD DE SERVICIO" Descripcion="[LAVADO GRATIS] LAVADO Y ASPIRADO GRATIS" ValorUnitario="0.01" Importe="0.01" ObjetoImp="02">
+<cfdi:Impuestos>
+<cfdi:Traslados>
+<cfdi:Traslado Base="0.01" Importe="0.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
+</cfdi:Concepto>
+</cfdi:Conceptos>
+<cfdi:Impuestos TotalImpuestosTrasladados="570.48">
+<cfdi:Traslados>
+<cfdi:Traslado Base="3565.52" Importe="570.48" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+</cfdi:Traslados>
+</cfdi:Impuestos>
 </cfdi:Comprobante>

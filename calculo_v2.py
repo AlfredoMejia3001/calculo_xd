@@ -9,7 +9,6 @@ __maintainer__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
 __email__ = ['ljimenez@finkok.com', 'soporte@finkok.com']
 __status__ = 'Development'
 
-from collections import defaultdict
 from datetime import datetime, timedelta
 from decimal import Decimal
 from lxml import etree
@@ -17,7 +16,7 @@ from colorama import Fore, Style
 import math
 import requests
 from decimal import ROUND_HALF_UP
-
+from sig import timbrar
 
 # Cargar el archivo XML
 xml_string = open(
@@ -27,8 +26,22 @@ namespaces = {
     'cfdi': 'http://www.sat.gob.mx/cfd/4',
     'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
     'pago20': 'http://www.sat.gob.mx/Pagos20',
-    'cce20': 'http://www.sat.gob.mx/ComercioExterior20'
+    'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+    's0': 'apps.services.soap.core.views'
 }
+fecha = datetime.now()
+fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+rfc="EKU9003173C9"
+name="ESCUELA KEMPER URGATE"
+regi="601"
+xml_etree.set("Fecha", fecha)
+xml_etree.set("NoCertificado", '30001000000500003416')
+nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+if nodo:  # Check if the list is not empty
+    emisor = nodo[0]  # Get the first matching node
+    emisor.set('Rfc', str(rfc))
+    emisor.set('Nombre', str(name))
+    emisor.set('RegimenFiscal', str(regi))
 
 
 def truncar(valor, decimales=2):
@@ -111,6 +124,15 @@ def redondeo(valor):
         # Regla 4: Si el penúltimo número es impar, redondear al alza
         return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
 
+def verificar_clave_prod_serv(clave):
+    url = f"http://127.0.0.1:8000/sat/claveProdServ/?search={clave}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        if data['count'] > 0:
+            return data['results'][0]['clave']
+    return None
 
 def realizar_calculos_generales():
     print(Fore.GREEN + "-------------- Cálculos Generales --------------" + Style.RESET_ALL)
@@ -130,7 +152,16 @@ def realizar_calculos_generales():
     importeT = [round(x * y, 2) for x, y in zip(BaseT, TasaOCuota)]
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
+    clave1 = str(claves_prod_serv[0])
+    clave_encontrada = verificar_clave_prod_serv(clave1)
 
+    if clave_encontrada:
+        print(
+            Fore.GREEN + f"ClaveProdServ encontrada en el catálogo: {clave_encontrada}" + Style.RESET_ALL)
+    else:
+        print(
+            Fore.RED + f"ClaveProdServ {clave1} no encontrada en el catálogo." + Style.RESET_ALL)
+    
     for clave, base_calc, importe_calc, importe_xml, nodo in zip(claves_prod_serv, Base, importeT, xml_importes, xml_etree.xpath(".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)):
         if importe_calc != importe_xml:
             print(
@@ -184,8 +215,8 @@ def realizar_calculos_generales():
 
     if total_traslados != tras:
         print("Discrepancia en TotalImpuestosTrasladados", trasla)
-        first_element = tras1[-1]
-        first_element.set('TotalImpuestosTrasladados', trasla)
+        last_element = tras1[-1]
+        last_element.set('TotalImpuestosTrasladados', trasla)
      
     print(Fore.GREEN +
           f"Suma total de impuestos trasladados: {total_traslados}" + Style.RESET_ALL)
@@ -202,7 +233,26 @@ def realizar_calculos_generales():
     with open("cfdi_modificado.xml", "wb") as f:
         f.write(etree.tostring(xml_etree, pretty_print=True,
                 xml_declaration=True, encoding='UTF-8'))
-    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
 
 
 def realizar_calculos_pago():
@@ -259,6 +309,8 @@ def realizar_calculos_pago():
         if imp_calc != imp_xml:
             print(Fore.BLUE +
                   f"\nDiscrepancia detectada en el TrasladoDR {idx + 1}:")
+            node= xml_etree.xparh("..//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR", namespaces=namespaces)
+            node.set('ImporteDR',imp_calc)
             print(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
         else:
@@ -270,13 +322,13 @@ def realizar_calculos_pago():
         ".//pago20:Pago/@TipoCambioP", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Tipo de cambio USD: {tipo_cambio_usd}" + Style.RESET_ALL)
-
+            
     # Extraer el total de pagos desde el XML
     total_pago = Decimal(xml_etree.xpath(
         ".//pago20:Totales/@MontoTotalPagos", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
-# Comparar con TotalPagos
+
     monto = Decimal(xml_etree.xpath(
         ".//pago20:Pago/@Monto", namespaces=namespaces)[0])
     total_script = redondeo(monto * tipo_cambio_usd)
@@ -284,7 +336,14 @@ def realizar_calculos_pago():
           f"Total de pagos según el script: {total_script}" + Style.RESET_ALL)
     if total_script != total_pago:
         print(
-            Fore.RED + f"Discrepancia: Resultado Monto * TipoCambioP (redondeado/truncado): {total_script} vs MontoTotalPagos: {total_pago}" + Style.RESET_ALL)
+            Fore.RED + f"Discrepancia: Resultado Monto * TipoCambioP (redondeado/truncado): {total_script} vs MontoTotalPagos: {total_pago}" + Style.RESET_ALL
+        )
+        node1 = xml_etree.xpath(".//pago20:Totales", namespaces=namespaces)
+        # Check if there are any nodes in node1
+        if node1:
+            # Assuming you want to set the attribute on the first matching node
+            node1[0].set('MontoTotalPagos', str(total_script))
+        
     else:
         print(
             Fore.GREEN + f"Los valores coinciden: {total_script} == {total_pago}" + Style.RESET_ALL)
@@ -319,6 +378,7 @@ def realizar_calculos_pago():
     if resultado_redondeado != total_traslados_base_iva16:
         print(
             Fore.RED + f"Discrepancia: Resultado BaseP * TipoCambioUSD (redondeado): {resultado_redondeado} vs TotalTrasladosBaseIVA16: {total_traslados_base_iva16}" + Style.RESET_ALL)
+
     else:
         print(
             Fore.GREEN + f"Los valores coinciden: {resultado_redondeado} == {total_traslados_base_iva16}" + Style.RESET_ALL)
@@ -336,8 +396,12 @@ def realizar_calculos_pago():
     print(Fore.BLUE +
           f"La sumatoria de ImporteP es: {sumatoria_importe} = {redondeo(ImporteP[0])}")
 
-    print(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
-
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
 
 def calcular_retenciones():
     # Verificar si existen retenciones en el comprobante
@@ -366,9 +430,15 @@ def calcular_retenciones():
                 Fore.RED + f"\nDiscrepancia detectada en la RetencionDR {idx + 1}:")
             print(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
-
+            node1= xml_etree.xpath('.//pago20:RetencionDR', namespaces=namespaces)
+            node1.set("ImporteDR", imp_calc)
     print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
-
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
 # Función para realizar cálculos relacionados con Comercio Exterior
 
 
@@ -393,13 +463,15 @@ def realizar_calculos_comercio_exterior():
 
     # Obtener el tipo de cambio desde la API
     tipo_cambio_api = obtener_tipo_cambio_api()
-
+    tipo_cambio_api_str =str(tipo_cambio_api)
     if tipo_cambio_api is not None:
         if tipo_cambio_xml == tipo_cambio_api:
             print(Fore.GREEN + "Los tipos de cambio coinciden." + Style.RESET_ALL)
         else:
             print(
                 Fore.RED + f"Los tipos de cambio NO coinciden. XML: " + Fore.YELLOW + f"{tipo_cambio_xml}" + Fore.RED + f", API: " + Fore.YELLOW + f"{tipo_cambio_api}" + Style.RESET_ALL)
+            nodo1= xml_etree.xpath('.//cce20:ComercioExterior', namespaces=namespaces)
+            nodo1.set('TipoCambioUSD', tipo_cambio_api_str )
     else:
         print(
             Fore.RED + "No se pudo obtener el tipo de cambio de la API." + Style.RESET_ALL)
@@ -465,7 +537,12 @@ def realizar_calculos_comercio_exterior():
                       f"{limite_inferior_truncado}" + Fore.CYAN + f"--"+Fore.CYAN + f"Limite superior: "+Fore.YELLOW + f"{limite_superior_redondeado}")
 
     print(Fore.GREEN + "--------------------------------------------------------" + Style.RESET_ALL)
-
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
 
 # Verificar el tipo de comprobante y proceder
 tipo_comprobante = xml_etree.get("TipoDeComprobante")

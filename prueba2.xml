@@ -8,7 +8,7 @@
     </cfdi:Conceptos>
     <cfdi:Complemento>
         <pago20:Pagos Version="2.0">
-            <pago20:Totales MontoTotalPagos="25078.22" TotalTrasladosBaseIVA0="23107.71" TotalTrasladosBaseIVA16="1698.70" TotalTrasladosImpuestoIVA0="0.00" TotalTrasladosImpuestoIVA16="271.80"/>
+            <pago20:Totales MontoTotalPagos="2508.22" TotalTrasladosBaseIVA0="23107.71" TotalTrasladosBaseIVA16="1698.70" TotalTrasladosImpuestoIVA0="0.00" TotalTrasladosImpuestoIVA16="271.80"/>
             <pago20:Pago CtaBeneficiario="012180001180438250" RfcEmisorCtaBen="BBA830831LJ2" FechaPago="2023-12-14T12:00:00" TipoCambioP="1" Monto="25078.22" FormaDePagoP="03" MonedaP="MXN">
                 <pago20:DoctoRelacionado IdDocumento="C53D52AB-13F9-594C-9A00-817C4311973D" MonedaDR="MXN" EquivalenciaDR="1" Folio="2342" ObjetoImpDR="02" ImpSaldoInsoluto="0.00" Serie="PCELO" ImpPagado="620.08" NumParcialidad="1" ImpSaldoAnt="620.08">
                     <pago20:ImpuestosDR>
