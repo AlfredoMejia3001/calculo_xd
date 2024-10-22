@@ -9,33 +9,25 @@ __maintainer__ = ['Manuel Hurtado', 'Alfredo Mejia', 'Armando Jimenez']
 __email__ = ['ljimenez@finkok.com', 'soporte@finkok.com']
 __status__ = 'Development'
 
-from collections import defaultdict
 from datetime import datetime, timedelta
 from decimal import Decimal
 from lxml import etree
 from colorama import Fore, Style
 import math
-import lxml
 import requests
 from decimal import ROUND_HALF_UP
-
+from sig import timbrar
 
 # Cargar el archivo XML
-xml_string = open(
-    "prueba2.xml", "rb").read()
-xml_etree = etree.fromstring(xml_string)
-tree = etree.parse('prueba.xml')
-namespaces = {
-    'cfdi': 'http://www.sat.gob.mx/cfd/4',
-    'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
-    'pago20': 'http://www.sat.gob.mx/Pagos20',
-    'cce20': 'http://www.sat.gob.mx/ComercioExterior20'
-}
+#xml_string = open("prueba.xml", "rb").read()
+#xml_etree = etree.fromstring(xml_string)
+
 
 
 def truncar(valor, decimales=2):
     factor = Decimal(10) ** decimales
     return math.trunc(Decimal(valor) * factor) / factor
+
 
 def obtener_tipo_cambio_api():
     token = "a0d9d68a166b6565e59872885d9bb2927abd03f00acdcadded548b96684dc93d"
@@ -53,7 +45,8 @@ def obtener_tipo_cambio_api():
         fecha_fin = format  # Fecha actual
 
         # Formatear la URL
-        formatted_url = url.format(fecha_ini=fecha_ini, fecha_fin=fecha_fin, token=token)
+        formatted_url = url.format(
+            fecha_ini=fecha_ini, fecha_fin=fecha_fin, token=token)
 
         # Realizar la solicitud GET
         response = requests.get(formatted_url)
@@ -73,14 +66,18 @@ def obtener_tipo_cambio_api():
                         print(f"Tipo de cambio API Banxico: {tipo_cambio_api}")
                         return tipo_cambio_api
                     else:
-                        print(f"No hay datos disponibles para la fecha: {fecha_ini}")
+                        print(
+                            f"No hay datos disponibles para la fecha: {fecha_ini}")
                 else:
-                    print("Formato inesperado en la respuesta de la API. Revisa la estructura.")
+                    print(
+                        "Formato inesperado en la respuesta de la API. Revisa la estructura.")
             except ValueError as e:
                 print(f"Error al decodificar JSON: {e}")
         else:
-            print(f"Error en la solicitud: {response.status_code} - {response.text}")
+            print(
+                f"Error en la solicitud: {response.status_code} - {response.text}")
     return None
+
 
 def redondeo(valor):
     # Convertir el valor a cadena con dos decimales
@@ -107,9 +104,39 @@ def redondeo(valor):
         # Regla 4: Si el penúltimo número es impar, redondear al alza
         return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
 
+def verificar_clave_prod_serv(clave):
+    url = f"https://web-production-a45c8.up.railway.app/sat/claveprodserv/?search='{clave}'"
+    response = requests.get(url)
 
-def realizar_calculos_generales():
-    print(Fore.GREEN + "-------------- Cálculos Generales --------------" + Style.RESET_ALL)
+    if response.status_code == 200:
+        data = response.json()
+        if data['count'] > 0:
+            return data['results'][0]['clave']
+    return None
+
+def realizar_calculos_generales(xml_etree):
+    print(" -----Cálculos Generales -----\n")
+    namespaces = {
+        'cfdi': 'http://www.sat.gob.mx/cfd/4',
+        'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+        'pago20': 'http://www.sat.gob.mx/Pagos20',
+        'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+        's0': 'apps.services.soap.core.views'
+    }
+    fecha = datetime.now()
+    fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+    rfc="EKU9003173C9"
+    name="ESCUELA KEMPER URGATE"
+    regi="601"
+    xml_etree.set("Fecha", fecha)
+    xml_etree.set("NoCertificado", '30001000000500003416')
+    nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+    if nodo:  # Check if the list is not empty
+        emisor = nodo[0]  # Get the first matching node
+        emisor.set('Rfc', str(rfc))
+        emisor.set('Nombre', str(name))
+        emisor.set('RegimenFiscal', str(regi))
+
 
     claves_prod_serv = xml_etree.xpath(
         ".//cfdi:Concepto/@ClaveProdServ", namespaces=namespaces)
@@ -126,18 +153,28 @@ def realizar_calculos_generales():
     importeT = [round(x * y, 2) for x, y in zip(BaseT, TasaOCuota)]
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
-   
-    for clave, base_calc, importe_calc, importe_xml in zip(claves_prod_serv, Base, importeT, xml_importes):
+    clave1 = str(claves_prod_serv[0])
+    clave_encontrada = verificar_clave_prod_serv(clave1)
+
+    if clave_encontrada:
+        print(f"ClaveProdServ encontrada en el catálogo: {clave_encontrada}\n")
+    else:
+        print(
+            f"ClaveProdServ {clave1} no encontrada en el catálogo.\n" )
+    
+    for clave, base_calc, importe_calc, importe_xml, nodo in zip(claves_prod_serv, Base, importeT, xml_importes, xml_etree.xpath(".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)):
         if importe_calc != importe_xml:
             print(
-                Fore.CYAN + f"\nDiscrepancia detectada en el producto con ClaveProdServ: " +
-                Fore.RED + f"{clave}" + Fore.BLUE +
-                f"\nBase calculada: " + Fore.GREEN + f"{base_calc}" + Fore.BLUE +
-                f", Importe calculado: " + Fore.GREEN + f"{importe_calc}" + Fore.BLUE +
-                f", Importe en XML: " + Fore.RED +
-                f"{importe_xml}" + Style.RESET_ALL
+                f"\nDiscrepancia detectada en el producto con ClaveProdServ: " +f"{clave}\n" 
+                f"\nBase calculada: "  f"{base_calc}\n"
+                f", Importe calculado: "f"{importe_calc}\n" 
+                f", Importe en XML: "
+                f"{importe_xml}\n" 
             )
-    importe_t = [b * TasaOCuota[0] for b in BaseT]    
+            # Actualiza el atributo Importe en el nodo correspondiente
+            # Actualiza el Importe con el valor calculado
+            nodo.set('Importe', str(importe_calc))
+
     subtotal = round(sum(Base), 2)
     total_traslados = round(sum(importeT), 2)
     xml_subtotal = float(xml_etree.get("SubTotal"))
@@ -158,30 +195,88 @@ def realizar_calculos_generales():
 
     total_calculado = round(subtotal + total_traslados - total_retenciones, 2)
 
-    if redondeo(importe_t[0]) != importeT:
-        print(
-            Fore.RED + f"Discrepancia en el importe: Calculado: {importe_t}, XML: {xml_importes}" + Style.RESET_ALL)
     # Mostrar las discrepancias entre el total y el subtotal
     if round(subtotal, 2) != round(xml_subtotal, 2):
         print(
-            Fore.RED + f"Discrepancia en el subtotal: Calculado: {subtotal}, XML: {xml_subtotal}" + Style.RESET_ALL)
+            f"Discrepancia en el subtotal: Calculado: {subtotal}, XML: {xml_subtotal}\n")
+        xml_etree.set('SubTotal', str(subtotal))
     if round(total_calculado, 2) != round(xml_total, 2):
         print(
-            Fore.RED + f"Discrepancia en el total: Calculado: {total_calculado}, XML: {xml_total}" + Style.RESET_ALL)
-
+           f"Discrepancia en el total: Calculado: {total_calculado}, XML: {xml_total}")
+        xml_etree.set('Total', str(total_calculado))
     # Mostrar la suma de impuestos (traslados y retenciones)
-    print(Fore.GREEN +
-          f"Suma total de impuestos trasladados: {total_traslados}" + Style.RESET_ALL)
-    print(Fore.GREEN +
-          f"Suma total de retenciones: {total_retenciones}" + Style.RESET_ALL)
-    print(Fore.GREEN +
-          f"Suma total de impuestos (traslados - retenciones): {total_calculado}" + Style.RESET_ALL)
-
-    print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
-
     
-def realizar_calculos_pago():
+    tras = xml_etree.xpath('.//cfdi:Impuestos/@TotalImpuestosTrasladados', namespaces=namespaces)
+    tras1 = xml_etree.xpath('.//cfdi:Impuestos', namespaces=namespaces)
+
+  
+    trasla = str(total_traslados)
+
+    if total_traslados != tras:
+        print("Discrepancia en TotalImpuestosTrasladados", trasla)
+        last_element = tras1[-1]
+        last_element.set('TotalImpuestosTrasladados', trasla)
+     
+    print(
+          f"Suma total de impuestos trasladados: {total_traslados}" )
+        
+        
+    print(
+          f"Suma total de retenciones: {total_retenciones}")
+    print(
+          f"Suma total de impuestos (traslados - retenciones): {total_calculado}" )
+
+    print( "----------------------------------------------\n")
+
+    # Guardar el XML modificado en un nuevo archivo
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+
+
+def realizar_calculos_pago(xml_etree):
     print(Fore.GREEN + "-------------- Cálculos de Pagos --------------" + Style.RESET_ALL)
+    namespaces = {
+        'cfdi': 'http://www.sat.gob.mx/cfd/4',
+        'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+        'pago20': 'http://www.sat.gob.mx/Pagos20',
+        'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+        's0': 'apps.services.soap.core.views'
+    }
+    fecha = datetime.now()
+    fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+    rfc="EKU9003173C9"
+    name="ESCUELA KEMPER URGATE"
+    regi="601"
+    xml_etree.set("Fecha", fecha)
+    xml_etree.set("NoCertificado", '30001000000500003416')
+    nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+    if nodo:  # Check if the list is not empty
+        emisor = nodo[0]  # Get the first matching node
+        emisor.set('Rfc', str(rfc))
+        emisor.set('Nombre', str(name))
+        emisor.set('RegimenFiscal', str(regi))
+
 
     BaseDR = [Decimal(x) for x in xml_etree.xpath(
         ".//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR/@BaseDR", namespaces=namespaces)]
@@ -234,6 +329,8 @@ def realizar_calculos_pago():
         if imp_calc != imp_xml:
             print(Fore.BLUE +
                   f"\nDiscrepancia detectada en el TrasladoDR {idx + 1}:")
+            node= xml_etree.xparh("..//pago20:Pagos/pago20:Pago/pago20:DoctoRelacionado/pago20:ImpuestosDR/pago20:TrasladosDR/pago20:TrasladoDR", namespaces=namespaces)
+            node.set('ImporteDR',imp_calc)
             print(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
         else:
@@ -245,21 +342,28 @@ def realizar_calculos_pago():
         ".//pago20:Pago/@TipoCambioP", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Tipo de cambio USD: {tipo_cambio_usd}" + Style.RESET_ALL)
-
+            
     # Extraer el total de pagos desde el XML
     total_pago = Decimal(xml_etree.xpath(
         ".//pago20:Totales/@MontoTotalPagos", namespaces=namespaces)[0])
     print(Fore.GREEN +
           f"Total de pagos según XML: {total_pago}" + Style.RESET_ALL)
-# Comparar con TotalPagos
+
     monto = Decimal(xml_etree.xpath(
-        ".//pago20:Pago/@Monto", namespaces=namespaces)[0])  
-    total_script = redondeo(monto * tipo_cambio_usd) 
+        ".//pago20:Pago/@Monto", namespaces=namespaces)[0])
+    total_script = redondeo(monto * tipo_cambio_usd)
     print(Fore.GREEN +
           f"Total de pagos según el script: {total_script}" + Style.RESET_ALL)
     if total_script != total_pago:
         print(
-            Fore.RED + f"Discrepancia: Resultado Monto * TipoCambioP (redondeado/truncado): {total_script} vs MontoTotalPagos: {total_pago}" + Style.RESET_ALL)
+            Fore.RED + f"Discrepancia: Resultado Monto * TipoCambioP (redondeado/truncado): {total_script} vs MontoTotalPagos: {total_pago}" + Style.RESET_ALL
+        )
+        node1 = xml_etree.xpath(".//pago20:Totales", namespaces=namespaces)
+        # Check if there are any nodes in node1
+        if node1:
+            # Assuming you want to set the attribute on the first matching node
+            node1[0].set('MontoTotalPagos', str(total_script))
+        
     else:
         print(
             Fore.GREEN + f"Los valores coinciden: {total_script} == {total_pago}" + Style.RESET_ALL)
@@ -276,7 +380,7 @@ def realizar_calculos_pago():
     # Calcular BaseP e ImporteP
     BaseP = ([sum(BaseDR) / x for x in EquivalenciaDR])
     ImporteP = [sum(ImporteDR_calculado) / x for x in EquivalenciaDR]
-    
+
     # Multiplicar BaseP[0] por el tipo de cambio
     resultado_base_tipo_cambio = BaseP[0] * tipo_cambio_usd
     resultado_redondeado = round(resultado_base_tipo_cambio, 2)
@@ -294,6 +398,7 @@ def realizar_calculos_pago():
     if resultado_redondeado != total_traslados_base_iva16:
         print(
             Fore.RED + f"Discrepancia: Resultado BaseP * TipoCambioUSD (redondeado): {resultado_redondeado} vs TotalTrasladosBaseIVA16: {total_traslados_base_iva16}" + Style.RESET_ALL)
+
     else:
         print(
             Fore.GREEN + f"Los valores coinciden: {resultado_redondeado} == {total_traslados_base_iva16}" + Style.RESET_ALL)
@@ -306,17 +411,60 @@ def realizar_calculos_pago():
     sumatoria_importe = '(' + ' + '.join(f"{imp}/{equiv}" for imp,
                                          equiv in zip(ImporteDR_calculado, EquivalenciaDR)) + ')'
 
-    
     print(
         Fore.RED + f"La sumatoria de BaseP es: {sumatoria_base} = {redondeo(BaseP[0])}")
     print(Fore.BLUE +
           f"La sumatoria de ImporteP es: {sumatoria_importe} = {redondeo(ImporteP[0])}")
 
-    print(Fore.GREEN + "No se encontraron retenciones en el comprobante." + Style.RESET_ALL)
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
 
 
-def calcular_retenciones():
+def calcular_retenciones(xml_etree):
     # Verificar si existen retenciones en el comprobante
+    namespaces = {
+        'cfdi': 'http://www.sat.gob.mx/cfd/4',
+        'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+        'pago20': 'http://www.sat.gob.mx/Pagos20',
+        'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+        's0': 'apps.services.soap.core.views'
+    }
+    fecha = datetime.now()
+    fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+    rfc="EKU9003173C9"
+    name="ESCUELA KEMPER URGATE"
+    regi="601"
+    xml_etree.set("Fecha", fecha)
+    xml_etree.set("NoCertificado", '30001000000500003416')
+    nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+    if nodo:  # Check if the list is not empty
+        emisor = nodo[0]  # Get the first matching node
+        emisor.set('Rfc', str(rfc))
+        emisor.set('Nombre', str(name))
+        emisor.set('RegimenFiscal', str(regi))
+
+
     retenciones_exist = xml_etree.xpath(
         ".//pago20:RetencionDR", namespaces=namespaces)
 
@@ -342,14 +490,41 @@ def calcular_retenciones():
                 Fore.RED + f"\nDiscrepancia detectada en la RetencionDR {idx + 1}:")
             print(
                 Fore.YELLOW + f"Importe calculado: {imp_calc}, Importe en XML: {imp_xml}" + Style.RESET_ALL)
-
+            node1= xml_etree.xpath('.//pago20:RetencionDR', namespaces=namespaces)
+            node1.set("ImporteDR", imp_calc)
     print(Fore.GREEN + "----------------------------------------------\n" + Style.RESET_ALL)
-
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
 # Función para realizar cálculos relacionados con Comercio Exterior
 
 
-def realizar_calculos_comercio_exterior():
+def realizar_calculos_comercio_exterior(xml_etree):
     print(Fore.GREEN + "-------------- Cálculos Comercio Exterior --------------" + Style.RESET_ALL)
+    namespaces = {
+        'cfdi': 'http://www.sat.gob.mx/cfd/4',
+        'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+        'pago20': 'http://www.sat.gob.mx/Pagos20',
+        'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+        's0': 'apps.services.soap.core.views'
+    }
+    fecha = datetime.now()
+    fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+    rfc="EKU9003173C9"
+    name="ESCUELA KEMPER URGATE"
+    regi="601"
+    xml_etree.set("Fecha", fecha)
+    xml_etree.set("NoCertificado", '30001000000500003416')
+    nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+    if nodo:  # Check if the list is not empty
+        emisor = nodo[0]  # Get the first matching node
+        emisor.set('Rfc', str(rfc))
+        emisor.set('Nombre', str(name))
+        emisor.set('RegimenFiscal', str(regi))
+
 
     # Obtener el tipo de cambio desde el XML (ya integrado)
     try:
@@ -369,13 +544,15 @@ def realizar_calculos_comercio_exterior():
 
     # Obtener el tipo de cambio desde la API
     tipo_cambio_api = obtener_tipo_cambio_api()
-
+    tipo_cambio_api_str =str(tipo_cambio_api)
     if tipo_cambio_api is not None:
         if tipo_cambio_xml == tipo_cambio_api:
             print(Fore.GREEN + "Los tipos de cambio coinciden." + Style.RESET_ALL)
         else:
             print(
                 Fore.RED + f"Los tipos de cambio NO coinciden. XML: " + Fore.YELLOW + f"{tipo_cambio_xml}" + Fore.RED + f", API: " + Fore.YELLOW + f"{tipo_cambio_api}" + Style.RESET_ALL)
+            nodo1= xml_etree.xpath('.//cce20:ComercioExterior', namespaces=namespaces)
+            nodo1.set('TipoCambioUSD', tipo_cambio_api_str )
     else:
         print(
             Fore.RED + "No se pudo obtener el tipo de cambio de la API." + Style.RESET_ALL)
@@ -436,40 +613,71 @@ def realizar_calculos_comercio_exterior():
             # Validar que el valor de ValorDolares esté dentro de los límites
             if limite_inferior_truncado > valor_dolares or valor_dolares > limite_superior_redondeado:
                 print(
-                    Fore.RED + f"El valor de ValorDolares (" + Fore.YELLOW + f"{valor_dolares}" + Fore.RED + f") está fuera de los límites para la mercancía con NoIdentificacion: {no_identificacion}." + Style.RESET_ALL)
-                print(Fore.CYAN + f"Limite inferior: " + Fore.YELLOW +
-                      f"{limite_inferior_truncado}" + Fore.CYAN + f"--"+Fore.CYAN + f"Limite superior: "+Fore.YELLOW + f"{limite_superior_redondeado}")
+                    f"El valor de ValorDolares (" f"{valor_dolares}"f") está fuera de los límites para la mercancía con NoIdentificacion: {no_identificacion}.")
+                print(f"Limite inferior: "
+                      f"{limite_inferior_truncado}"f"--"f"Limite superior: ""{limite_superior_redondeado}")
 
-    print(Fore.GREEN + "--------------------------------------------------------" + Style.RESET_ALL)
+    print( "--------------------------------------------------------")
+    with open("cfdi_modificado.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
+    xml = "cfdi_modificado.xml"
+    timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
 
 
 # Verificar el tipo de comprobante y proceder
-tipo_comprobante = xml_etree.get("TipoDeComprobante")
-if tipo_comprobante:
-    tipo = tipo_comprobante[0].upper()
-    print(Fore.CYAN +
-          f"Detectado comprobante de tipo {tipo}." + Style.RESET_ALL)
+def iniciar (xml_etree):
+    namespaces = {
+            'cfdi': 'http://www.sat.gob.mx/cfd/4',
+            'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+            'pago20': 'http://www.sat.gob.mx/Pagos20',
+            'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+            's0': 'apps.services.soap.core.views'
+        }
+    tipo_comprobante = xml_etree.get("TipoDeComprobante")
+    if tipo_comprobante:
+        tipo = tipo_comprobante[0].upper()
+        print(
+            f"Detectado comprobante de tipo {tipo}.\n")
 
-    if tipo == "T":
-        if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
-            realizar_calculos_comercio_exterior()
+        if tipo == "T":
+            if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
+                realizar_calculos_comercio_exterior(xml_etree)
+            else:
+                print(
+                    "Comprobante de tipo T sin complemento de comercio exterior.")
+
+        elif tipo in ["I", "E"]:
+            if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
+                realizar_calculos_generales(xml_etree)
+                realizar_calculos_comercio_exterior(xml_etree)
+            else:
+
+                realizar_calculos_generales(xml_etree)
+
+        elif tipo == 'P':
+            realizar_calculos_pago(xml_etree)
+            calcular_retenciones(xml_etree)
+
         else:
-            print(
-                Fore.RED + "Comprobante de tipo T sin complemento de comercio exterior." + Style.RESET_ALL)
-
-    elif tipo in ["I", "E"]:
-        if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
-            realizar_calculos_generales()
-            realizar_calculos_comercio_exterior()
-        else:
-           
-            realizar_calculos_generales()
-
-    elif tipo == 'P':
-        realizar_calculos_pago()
-        calcular_retenciones()
-
+            print("Tipo de comprobante no identificado.")
     else:
-        print(Fore.RED + "Tipo de comprobante no identificado." + Style.RESET_ALL)
-else:
-    print(Fore.RED + "No se encontró el tipo de comprobante en el XML." + Style.RESET_ALL)
+        print("No se encontró el tipo de comprobante en el XML.")

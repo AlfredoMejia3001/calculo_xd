@@ -2,7 +2,6 @@ from suds.client import Client
 import logging
 import base64
  
-# Configurar el nivel de log para depuración
 
 # Usuario y contraseña, asignados por FINKOK
 username = 'amejia@finkok.com.mx'
@@ -20,10 +19,6 @@ def timbrar(xml):
     client = Client(url, cache=None)
     contenido = client.service.sign_stamp(xml_base64, username, password)
     xml = contenido.xml
-    
-    # Guardar el XML estampado
-    with open("stamp.xml", "w") as archivo:
-        archivo.write(str(xml))
     
     # Guardar la solicitud SOAP
     with open('request.xml', 'w') as req_file:

@@ -27,6 +27,7 @@ namespaces = {
     'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
     'pago20': 'http://www.sat.gob.mx/Pagos20',
     'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+    'nomina': 'http://www.sat.gob.mx/nomina12',
     's0': 'apps.services.soap.core.views'
 }
 fecha = datetime.now()
@@ -123,9 +124,9 @@ def redondeo(valor):
     else:
         # Regla 4: Si el penúltimo número es impar, redondear al alza
         return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
-
+'''
 def verificar_clave_prod_serv(clave):
-    url = f"http://127.0.0.1:8000/sat/claveProdServ/?search={clave}"
+    url = f"https://web-production-a45c8.up.railway.app/sat/claveprodserv/?search='{clave}'"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -133,7 +134,7 @@ def verificar_clave_prod_serv(clave):
         if data['count'] > 0:
             return data['results'][0]['clave']
     return None
-
+'''
 def realizar_calculos_generales():
     print(Fore.GREEN + "-------------- Cálculos Generales --------------" + Style.RESET_ALL)
 
@@ -152,7 +153,7 @@ def realizar_calculos_generales():
     importeT = [round(x * y, 2) for x, y in zip(BaseT, TasaOCuota)]
     xml_importes = [(float(imp)) for imp in xml_etree.xpath(
         ".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado/@Importe", namespaces=namespaces)]
-    clave1 = str(claves_prod_serv[0])
+    ''' clave1 = str(claves_prod_serv[0])
     clave_encontrada = verificar_clave_prod_serv(clave1)
 
     if clave_encontrada:
@@ -161,7 +162,7 @@ def realizar_calculos_generales():
     else:
         print(
             Fore.RED + f"ClaveProdServ {clave1} no encontrada en el catálogo." + Style.RESET_ALL)
-    
+    '''
     for clave, base_calc, importe_calc, importe_xml, nodo in zip(claves_prod_serv, Base, importeT, xml_importes, xml_etree.xpath(".//cfdi:Concepto/cfdi:Impuestos/cfdi:Traslados/cfdi:Traslado", namespaces=namespaces)):
         if importe_calc != importe_xml:
             print(
@@ -172,8 +173,7 @@ def realizar_calculos_generales():
                 f", Importe en XML: " + Fore.RED +
                 f"{importe_xml}" + Style.RESET_ALL
             )
-            # Actualiza el atributo Importe en el nodo correspondiente
-            # Actualiza el Importe con el valor calculado
+       
             nodo.set('Importe', str(importe_calc))
 
     subtotal = round(sum(Base), 2)
@@ -402,6 +402,24 @@ def realizar_calculos_pago():
     print("El archivo XML modificado ha sido guardado como 'prueba_modificada.xml'.")
     xml = "cfdi_modificado.xml"
     timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+
 
 def calcular_retenciones():
     # Verificar si existen retenciones en el comprobante
@@ -543,8 +561,40 @@ def realizar_calculos_comercio_exterior():
     print("El archivo XML modificado ha sido guardado como 'cfdi_modificado.xml'.")
     xml = "cfdi_modificado.xml"
     timbrar(xml)
+    xml_response = open(
+        "response.xml", "rb").read()
+    xml_res = etree.fromstring(xml_response)
+    try:
+        print("Codigo de error:", xml_res.xpath(".//s0:CodigoError", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Mensaje de error:", xml_res.xpath(".//s0:MensajeIncidencia", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
+    
+    try:
+        print("Code Estatus:", xml_res.xpath(".//s0:CodEstatus", namespaces=namespaces)[0].text)
+    except IndexError:
+        pass
 
-# Verificar el tipo de comprobante y proceder
+
+def realizar_calculos_nomina():
+    importe_nomina = xml_etree.xpath('.//cfdi:Conceptos/cfdi:Concepto/@Importe', namespaces=namespaces)
+    total_percepciones=xml_etree.xpath('.//nomina12:Nomina/@TotalPercepciones', namespaces=namespaces)
+    if xml_etree.xpath('.//nomina12:Nomina/@TotalOtrosPagos', namespaces=namespaces):
+        importe_nomina = float(importe_nomina)
+        total_otros_pagos=xml_etree.xpath('.//nomina12:Nomina/@TotalOtrosPagos', namespaces=namespaces)
+        importe_cal = total_percepciones+total_otros_pagos
+        print(importe_cal)
+    
+    if importe_nomina != total_percepciones:
+        print(f"El importe no corresponde a {total_percepciones}")
+
+
+
+
 tipo_comprobante = xml_etree.get("TipoDeComprobante")
 if tipo_comprobante:
     tipo = tipo_comprobante[0].upper()

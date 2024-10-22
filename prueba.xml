@@ -1,46 +1,24 @@
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:cce20="http://www.sat.gob.mx/ComercioExterior20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd" Version="4.0" Sello="hpdq6F3NrofjYkJlvSbQskGreVUINx0lX8stc1/+GGFgDwvZjO425GOK7mLHtT864R48BtO4Tt9iQpJLdi1T1slLgJoB0rplnBjsYeFZrKDsPRBWu5Y9rm910c4TgXzKlACzTdWFmqi2CAaGKIRRbwduazFCGsS5J1W2auUnG+bv10XiHWvMcbd8aOc34MtEul9Ikh3TmQnz+JcSq152Ik1AterlRGlKQITMrfMM9TT0YFNiU1B363Bt/U699/Tsm1Xr1ftrULMJO9ATI23BZqLnFKGWdqE8UP981ppIttQpZlBaBK9Oni2+CnWX+fmGYhtCCh5xA2Xn+AyOVjHJ/A==" Fecha="2024-10-16T23:59:00" Folio="529" Serie="INV/2024/" FormaPago="03" NoCertificado="00001000000707375193" Certificado="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" CondicionesDePago="Pago inmediato" SubTotal="3565.52" Moneda="MXN" Total="4136.00" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="27023">
-<cfdi:Emisor Rfc="SAM211109ND2" Nombre="SERVICIOS AUTOMOTRICES MARGON" RegimenFiscal="626"/>
-<cfdi:Receptor Rfc="HPA171116E44" Nombre="HL PAVIMENTOS" DomicilioFiscalReceptor="54060" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
-<cfdi:Conceptos>
-<cfdi:Concepto ClaveProdServ="25172000" NoIdentificacion="H-87" Cantidad="2.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="[H-87] BIELETA" ValorUnitario="725.00" Importe="1450.00" ObjetoImp="02">
-<cfdi:Impuestos>
-<cfdi:Traslados>
-<cfdi:Traslado Base="1450.00" Importe="232.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
-</cfdi:Concepto>
-<cfdi:Concepto ClaveProdServ="25172000" NoIdentificacion="1108003" Cantidad="2.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="[1108003] TERMINAL EXTERIOR" ValorUnitario="725.00" Importe="1450.00" ObjetoImp="02">
-<cfdi:Impuestos>
-<cfdi:Traslados>
-<cfdi:Traslado Base="1450.00" Importe="232.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
-</cfdi:Concepto>
-<cfdi:Concepto ClaveProdServ="76122405" Cantidad="1.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="SERVICIO DE ALINEACIÓN Y BALANCEO" ValorUnitario="585.51" Importe="585.51" ObjetoImp="02">
-<cfdi:Impuestos>
-<cfdi:Traslados>
-<cfdi:Traslado Base="585.51" Importe="93.68" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
-</cfdi:Concepto>
-<cfdi:Concepto ClaveProdServ="15121800" NoIdentificacion="ECO-115-P" Cantidad="1.000000" ClaveUnidad="H87" Unidad="UNIDADES" Descripcion="pipi" ValorUnitario="80.00" Importe="80.00" ObjetoImp="02">
-<cfdi:Impuestos>
-<cfdi:Traslados>
-<cfdi:Traslado Base="80.00" Importe="12.80" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
-</cfdi:Concepto>
-<cfdi:Concepto ClaveProdServ="78181500" NoIdentificacion="LAVADO GRATIS" Cantidad="1.000000" ClaveUnidad="E48" Unidad="UNIDAD DE SERVICIO" Descripcion="[LAVADO GRATIS] LAVADO Y ASPIRADO GRATIS" ValorUnitario="0.01" Importe="0.01" ObjetoImp="02">
-<cfdi:Impuestos>
-<cfdi:Traslados>
-<cfdi:Traslado Base="0.01" Importe="0.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
-</cfdi:Concepto>
-</cfdi:Conceptos>
-<cfdi:Impuestos TotalImpuestosTrasladados="570.48">
-<cfdi:Traslados>
-<cfdi:Traslado Base="3565.52" Importe="570.48" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
-</cfdi:Traslados>
-</cfdi:Impuestos>
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante xmlns:nomina12="http://www.sat.gob.mx/nomina12"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/nomina12 http://www.sat.gob.mx/sitio_internet/cfd/nomina/nomina12.xsd" Version="4.0" Serie="Serie" Folio="Folio" Fecha="2024-03-01T00:00:00" Sello="ffUk73LhCYydULkBZyt+dKov5eEd5FKw+DvrfxtwR2GMdmPObqZXM0kv94ReMTyM1r69gSZpJbtVrouXF/sUZWhKyUQtKg4AQCXlg97bAgpIpzTlOBVp6xRE81+fJo4L+8tQQvqhYbc9yd0Crdgr+zeeNZIa8rbrPOWdoDxQSfrGHmyLJjYlMjvW5Fe+uzIRs/b12cCwjHjPMXtcKDo+RvNhJLCF63bcZ9yvWHz6pURFZLcDAi9I7TUmfc+2rTPRGIwyqt0vu9tDeiJj9QKLZOJXe2TPLakTZdKkVElDjsSxzRjJXNBGUnsD/ShRwWPWe/lQrsWHmz3SjCafzO1kqw==" SubTotal="5000" Descuento="300" Moneda="MXN" Total="4700" TipoDeComprobante="N" Exportacion="01" MetodoPago="PUE" LugarExpedicion="20000"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/4" NoCertificado="30001000000500003416" Certificado="MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=">
+    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601" />
+    <cfdi:Receptor Rfc="XOJI740919U48" Nombre="INGRID XODAR JIMENEZ" DomicilioFiscalReceptor="76028" RegimenFiscalReceptor="605" UsoCFDI="CN01" />
+    <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="84111505" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago de nómina" ValorUnitario="5000.00" Descuento="300" Importe="5000.00" ObjetoImp="01"></cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Complemento>
+        <nomina12:Nomina Version="1.2" TipoNomina="O" FechaPago="2023-05-24" FechaInicialPago="2023-05-09" FechaFinalPago="2023-05-24" NumDiasPagados="15" TotalPercepciones="5000.0" TotalDeducciones="300">
+            <nomina12:Emisor RegistroPatronal="B5510768108" RfcPatronOrigen="URE180429TM6" />
+            <nomina12:Receptor Curp="XEXX010101HNEXXXA4" NumSeguridadSocial="000000" FechaInicioRelLaboral="2015-01-01" Antigüedad="P437W" TipoContrato="01" TipoJornada="01" TipoRegimen="03" NumEmpleado="120" Departamento="Desarrollo" Puesto="Ingeniero de Software" RiesgoPuesto="1" PeriodicidadPago="04" CuentaBancaria="1111111111" Banco="002" SalarioBaseCotApor="490.22" SalarioDiarioIntegrado="146.47" ClaveEntFed="JAL" />
+            <nomina12:Percepciones TotalSueldos="5000.0" TotalGravado="2808.8" TotalExento="2191.2">
+                <nomina12:Percepcion TipoPercepcion="001" Clave="00500" Concepto="Sueldos, Salarios Rayas y Jornales" ImporteGravado="2808.8" ImporteExento="2191.2" />
+            </nomina12:Percepciones>
+            <nomina12:Deducciones TotalOtrasDeducciones="200" TotalImpuestosRetenidos="100">
+                <nomina12:Deduccion TipoDeduccion="001" Clave="00301" Concepto="Seguridad Social" Importe="200" />
+                <nomina12:Deduccion TipoDeduccion="002" Clave="00302" Concepto="ISR" Importe="100" />
+            </nomina12:Deducciones>
+        </nomina12:Nomina>
+        
+    </cfdi:Complemento>
 </cfdi:Comprobante>
