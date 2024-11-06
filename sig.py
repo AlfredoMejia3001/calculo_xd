@@ -27,3 +27,7 @@ def timbrar(xml):
     # Guardar la respuesta SOAP
     with open('response.xml', 'w') as res_file:
         res_file.write(str(client.last_received()))
+
+xml="prueba2.xml"
+
+timbrar(xml)
