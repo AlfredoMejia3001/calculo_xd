@@ -20,7 +20,7 @@ from sig import timbrar
 
 # Cargar el archivo XML
 xml_string = open(
-    "prueba.xml", "rb").read()
+    "prueba2.xml", "rb").read()
 xml_etree = etree.fromstring(xml_string)
 namespaces = {
     'cfdi': 'http://www.sat.gob.mx/cfd/4',

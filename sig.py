@@ -29,4 +29,5 @@ def timbrar(xml):
         res_file.write(str(client.last_received()))
 
 xml="prueba.xml"
+
 timbrar(xml)

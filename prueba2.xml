@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cce20="http://www.sat.gob.mx/ComercioExterior20" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd" Version="4.0" Serie="0" Folio="386" Exportacion="02" Fecha="2024-10-23T15:32:08" Moneda="XXX" LugarExpedicion="88290" SubTotal="0" Total="0" TipoDeComprobante="T" NoCertificado="30001000000500003416" Sello="PXsqaKdqbMlbRXu/Vsx6Kxl+hbywzZyyYWOMif8MNz0HXH0T8FfUcwQmrETGhqP/xsqDV0b7uy1nyEF6DfN6yfygb9WOjDiuS01Ewo8aSzR7VrJJf5SOW0L2BBYfTNmsIafJwUFk9H0ff7r8pToR7RQDCXiOJei1MORBq5gyzVQTy8dfsYFd+qo+W1avUVyTn2GpZzFjXc60KmhUo2aG/PawvB59zM5sgZv/wbGjBqC8Kp5ze1KsgFFEl4gUR+iLLqJnNFu5PMM7k/twUoIGx/55DdGyOS8u5zu2Bdm0+Y0+T1zo3HWBims21bJmXr0z76uV4VYx0QZdX/v6vqnFpA==" Certificado="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">
   <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
@@ -33,3 +34,76 @@
     </cce20:ComercioExterior>
   </cfdi:Complemento>
 </cfdi:Comprobante>
+=======
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:pago20="http://www.sat.gob.mx/Pagos20" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd" Version="4.0" Serie="CP" Folio="2226" Fecha="2024-10-31T15:48:00" Sello="OMmCKLv2tAs0KdT5kObl9L7JltOw2dkIbbyNCNM8GLShM1IAgytxFFORPv0bsIc4MvkQeqWImq1AOTViTzDe790mhYqKzW3+lbW22cM0rH9k++0wcpWuylt3XKXLKmpI2R4/7JwsTuVqYp8yxpSVJaz90/acSAJLn27voU/AKCrxv/2cvdQBKxSRjDYC73uggvnM3fXOeseiby68xWv21RNNWSE9CyHqUIs6TuovigFiXswyInNYX2umzFJJMJn+vKD84fAP2KzaasVBCuBSN9C/0IThwnCHCVhAN2/XFKjNd9Ie32ELu1Ihr7cBejGwryABJIwjtjHAeoHRNB2ufA==" NoCertificado="00001000000701112735" Certificado="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" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="01" LugarExpedicion="92018">
+   <cfdi:Emisor Rfc="EME860612TQ9" Nombre="VIBRANTZ ERACHEM MEXICO" RegimenFiscal="601"/>
+   <cfdi:Receptor Rfc="XEXX010101000" Nombre="VIBRANTZ SPECIALTY PRODUCTS LLC" UsoCFDI="CP01" RegimenFiscalReceptor="616" DomicilioFiscalReceptor="92018"/>
+   <cfdi:Conceptos>
+      <cfdi:Concepto ClaveProdServ="84111506" ClaveUnidad="ACT" Cantidad="1" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
+   </cfdi:Conceptos>
+   <cfdi:Complemento>
+      <pago20:Pagos Version="2.0">
+         <pago20:Totales TotalTrasladosBaseIVA0="6173259.62" TotalTrasladosImpuestoIVA0="0" MontoTotalPagos="6173259.62"/>
+         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="104910.00" CtaBeneficiario="0981000681">
+            <pago20:DoctoRelacionado IdDocumento="164F1CCE-3936-54F1-A9A3-19DAA1EBE2D7" Serie="F" Folio="10209" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="104910.00" ImpPagado="104910.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+               <pago20:ImpuestosDR>
+                  <pago20:TrasladosDR>
+                     <pago20:TrasladoDR BaseDR="59670.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
+                     <pago20:TrasladoDR BaseDR="45240.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
+                  </pago20:TrasladosDR>
+               </pago20:ImpuestosDR>
+            </pago20:DoctoRelacionado>
+            <pago20:ImpuestosP>
+               <pago20:TrasladosP>
+                  <pago20:TrasladoP BaseP="104910.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
+               </pago20:TrasladosP>
+            </pago20:ImpuestosP>
+         </pago20:Pago>
+         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="15238.00" CtaBeneficiario="0981000681">
+            <pago20:DoctoRelacionado IdDocumento="5A25CD5C-7E38-5528-9058-DE8CD3EE4229" Serie="F" Folio="10264" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="15238.00" ImpPagado="15238.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+               <pago20:ImpuestosDR>
+                  <pago20:TrasladosDR>
+                     <pago20:TrasladoDR BaseDR="15238.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
+                  </pago20:TrasladosDR>
+               </pago20:ImpuestosDR>
+            </pago20:DoctoRelacionado>
+            <pago20:ImpuestosP>
+               <pago20:TrasladosP>
+                  <pago20:TrasladoP BaseP="15238.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
+               </pago20:TrasladosP>
+            </pago20:ImpuestosP>
+         </pago20:Pago>
+         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="99720.00" CtaBeneficiario="0981000681">
+            <pago20:DoctoRelacionado IdDocumento="CECA825C-AD66-5D81-8B45-AA1768278290" Serie="F" Folio="10291" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="99720.00" ImpPagado="99720.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+               <pago20:ImpuestosDR>
+                  <pago20:TrasladosDR>
+                     <pago20:TrasladoDR BaseDR="99720.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
+                  </pago20:TrasladosDR>
+               </pago20:ImpuestosDR>
+            </pago20:DoctoRelacionado>
+            <pago20:ImpuestosP>
+               <pago20:TrasladosP>
+                  <pago20:TrasladoP BaseP="99720.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
+               </pago20:TrasladosP>
+            </pago20:ImpuestosP>
+         </pago20:Pago>
+         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="98530.00" CtaBeneficiario="0981000681">
+            <pago20:DoctoRelacionado IdDocumento="CD366CAC-4FA5-5D26-B0B1-F2EEC0D60DA9" Serie="F" Folio="10294" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="2" ImpSaldoAnt="98530.00" ImpPagado="98530.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
+               <pago20:ImpuestosDR>
+                  <pago20:TrasladosDR>
+                     <pago20:TrasladoDR BaseDR="98530.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
+                  </pago20:TrasladosDR>
+               </pago20:ImpuestosDR>
+            </pago20:DoctoRelacionado>
+            <pago20:ImpuestosP>
+               <pago20:TrasladosP>
+                  <pago20:TrasladoP BaseP="98530.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
+               </pago20:TrasladosP>
+            </pago20:ImpuestosP>
+         </pago20:Pago>
+      </pago20:Pagos>
+   </cfdi:Complemento>
+</cfdi:Comprobante>
+>>>>>>> 53100b37b60d0b101576f14f3de2a81d96ba994a
