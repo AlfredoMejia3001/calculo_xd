@@ -28,6 +28,7 @@ namespaces = {
     'pago20': 'http://www.sat.gob.mx/Pagos20',
     'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
     'nomina': 'http://www.sat.gob.mx/nomina12',
+    'cartaporte31': 'http://www.sat.gob.mx/CartaPorte31',
     's0': 'apps.services.soap.core.views'
 }
 fecha = datetime.now()
@@ -489,7 +490,8 @@ def realizar_calculos_comercio_exterior():
             print(
                 Fore.RED + f"Los tipos de cambio NO coinciden. XML: " + Fore.YELLOW + f"{tipo_cambio_xml}" + Fore.RED + f", API: " + Fore.YELLOW + f"{tipo_cambio_api}" + Style.RESET_ALL)
             nodo1= xml_etree.xpath('.//cce20:ComercioExterior', namespaces=namespaces)
-            nodo1.set('TipoCambioUSD', tipo_cambio_api_str )
+            
+           # nodo1.set('TipoCambioUSD', str(tipo_cambio_api_str[0]) )
     else:
         print(
             Fore.RED + "No se pudo obtener el tipo de cambio de la API." + Style.RESET_ALL)
@@ -595,6 +597,8 @@ def realizar_calculos_nomina():
 
 
 
+
+    print
 tipo_comprobante = xml_etree.get("TipoDeComprobante")
 if tipo_comprobante:
     tipo = tipo_comprobante[0].upper()
@@ -610,7 +614,7 @@ if tipo_comprobante:
 
     elif tipo in ["I", "E"]:
         if xml_etree.xpath(".//cce20:ComercioExterior", namespaces=namespaces):
-            realizar_calculos_generales()
+            #realizar_calculos_generales()
             realizar_calculos_comercio_exterior()
         else:
 
