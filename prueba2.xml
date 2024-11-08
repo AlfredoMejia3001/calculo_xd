@@ -1,109 +1,47 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cce20="http://www.sat.gob.mx/ComercioExterior20" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd" Version="4.0" Serie="0" Folio="386" Exportacion="02" Fecha="2024-10-23T15:32:08" Moneda="XXX" LugarExpedicion="88290" SubTotal="0" Total="0" TipoDeComprobante="T" NoCertificado="30001000000500003416" Sello="PXsqaKdqbMlbRXu/Vsx6Kxl+hbywzZyyYWOMif8MNz0HXH0T8FfUcwQmrETGhqP/xsqDV0b7uy1nyEF6DfN6yfygb9WOjDiuS01Ewo8aSzR7VrJJf5SOW0L2BBYfTNmsIafJwUFk9H0ff7r8pToR7RQDCXiOJei1MORBq5gyzVQTy8dfsYFd+qo+W1avUVyTn2GpZzFjXc60KmhUo2aG/PawvB59zM5sgZv/wbGjBqC8Kp5ze1KsgFFEl4gUR+iLLqJnNFu5PMM7k/twUoIGx/55DdGyOS8u5zu2Bdm0+Y0+T1zo3HWBims21bJmXr0z76uV4VYx0QZdX/v6vqnFpA==" Certificado="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">
+<cfdi:Comprobante xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/CartaPorte31 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte31.xsd" xmlns:cartaporte31="http://www.sat.gob.mx/CartaPorte31" xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Certificado="MIIFiTCCA3GgAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDMzNTkwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE1MTY1NDA0WhcNMjcwNTE1MTY1NDA0WjCBsDEgMB4GA1UEAxMXQ0VDSUxJQSBNSVJBTkRBIFNBTkNIRVoxIDAeBgNVBCkTF0NFQ0lMSUEgTUlSQU5EQSBTQU5DSEVaMSAwHgYDVQQKExdDRUNJTElBIE1JUkFOREEgU0FOQ0hFWjEWMBQGA1UELRMNTUlTQzQ5MTIxNEI4NjEbMBkGA1UEBRMSTUlTQzQ5MTIxNE1DQ1JOQzAxMRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlJRZRgEmqXvNLPXrZ/5IUiN8SJpumnYA9Gh/LvSxPZUDeYl9B7mL7/SbjE139WUZYBKlcR/od/1jgAiHqIxInAm3ggBD4MwO+nYHFPXZytIGh2tFQ2l47DyZKkhdzkcLuwS3Pu25YrgdRy6o7DcIxEqXUbvpZzbFe8+U3XgC0AnsWBBRwbRitlpfkRSPFA+qqofYdXFhb7pnr7aWkykohsRUfsaEwToQcYNtNafJncrinElgsZsH8IaQ4MeqEXpPSqKgp+5uYULfVkOOHIPKFCsE60Jv2+sGOSi9adcQ+virN0Uw440bsohbHeb5VNmCXKAlB5snVo+dYuGzcaZY/QIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAo5aMM/BQizSjtctSg14uLVZ8frWWxFCikYpio/PFmAZWpavXnT+NUipLFXYcUbFCHHt/RGC15QnaiJRurPRWOAQkLqqLy+guAeaA9EbKtViWAKnnUlCQnLJ/TbZoxzyLKHsW2jp/kTkAA5W9EuHJbTLyIobCa+yah0Xbb55o22mdSzl43qVgxYz13IBms1p5iFDzSvO4ccNMglvBZYICKRVM/XKhsB7NjvHowilKITWoZVirbHiztX+dxsRgE7g/ccDkFLP2mh6jI/3EuptWD5yR8SUmGcv8f0UC/ebWQ0DHNOonNKjL+spRVM8PqbABd3nboGm1oq5/8Je73ElpYjAb26XLUKwKGimY1gKyEeW0vcP62/hvrvHsu7/u8492wDbYurcpraVKl8E3hygTfSbYovAmUy9Kvlz6kiuywMJBpj+IwqFPNc89MLP5n4XhWgH4esb6pidulZTBpH3aE4KtSn+MTUzBYVctj72OgFjqkSe56Hb1E0Q2+pDu5XKnGP4yiaOJWiyoNcSp/9caQcKGkZqWMB69N519I3g4iDv0gf+WYy79ygj6z8Yg/1oJ3QklGmTSgaAYdXAAMeHjna9OTvwr2OE2dtaYVIT5bkEzTmzKVq6yDJuQZqYgw9obdNyH7PrBzvnnNC24/8IISaTgaHfJnX3LjQDJbYq72bg=" Exportacion="01" Fecha="2024-11-06T15:44:10" Folio="19264" FormaPago="99" LugarExpedicion="64258" MetodoPago="PPD" Moneda="MXN" NoCertificado="30001000000500003416" Sello="EiuETqNdG+LrcOmRpaMfp3MA7U6FTd1hVJ1kKgnQaf2hFplU5XlqMWTBwae4pYiQ3iEHELkpe7xvFvsdtUAOn4bj838O3k0cPa1BQQVwHh+n9K1UsKsT81RJ66SoRt5PjSribILrwmoN35VudhnSgjE9OUbqBf6pp8xmtNb6/O5POL9l47CrzUnj5Oacv7YSLAdCeANDknGP6jwAG8TzMJykEo72p9SK4mEnXdSN49VoqB1adHFcX8DFddlwg/v4G4n5j0m/hragXIW2GUfdxjye7DoEplNMQCD9L4HMQ4EGEmPf3ZJpPwS2fO2zma72dT4pq75IlHesmiDebVmj0A==" SubTotal="1010.00" TipoDeComprobante="I" Total="1171.6" Version="4.0" TipoCambio="1">
   <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
-  <cfdi:Receptor Rfc="RAHR770621ED0" Nombre="JOSE RAMON RANGEL HERNANDEZ" UsoCFDI="S01" DomicilioFiscalReceptor="88290" RegimenFiscalReceptor="610"/>
+  <cfdi:Receptor Rfc="MASO451221PM4" Nombre="MARIA OLIVIA MARTINEZ SAGAZ" DomicilioFiscalReceptor="80290" RegimenFiscalReceptor="612" UsoCFDI="G03"/>
   <cfdi:Conceptos>
-    <cfdi:Concepto Cantidad="1.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS A82-6208811"  ValorUnitario="130.000000" Importe="130.000000"/>
-    <cfdi:Concepto Cantidad="8.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS B08-6208803" ValorUnitario="131.960000" Importe="1055.680000"/>
-    <cfdi:Concepto Cantidad="3.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS S24-6208970" ValorUnitario="71.500000" Importe="214.500000"/>
-    <cfdi:Concepto Cantidad="4.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS S26-6208306" ValorUnitario="149.500000" Importe="598.000000"/>
-    <cfdi:Concepto Cantidad="7.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS S92-6208826" ValorUnitario="138.880000" Importe="972.160000"/>
-    <cfdi:Concepto Cantidad="3.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS V12-6218025" ValorUnitario="92.010000" Importe="276.030000"/>
-    <cfdi:Concepto Cantidad="7.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS V24-6209087" ValorUnitario="294.320000" Importe="2060.240000"/>
-    <cfdi:Concepto Cantidad="4.000000" ClaveProdServ="31261500" ClaveUnidad="H87" Unidad="KGM" ObjetoImp="01" Descripcion="CONTENEDOR DE PLASTICO Y SUS ACCESORIOS S83-6209071" ValorUnitario="126.560000" Importe="506.240000"/>
+    <cfdi:Concepto ClaveProdServ="78101802" NoIdentificacion="41744" Cantidad="1.000000" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="TRANSPORTE  FLETE SERVICIO  OS:123456789A" ValorUnitario="1010.000000" Importe="1010.000000" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1010" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="161.6"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
   </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="161.60">
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="1010.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="161.60"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
   <cfdi:Complemento>
-    <cce20:ComercioExterior Version="2.0" CertificadoOrigen="0" TipoCambioUSD="19.8985" Incoterm="DAP" ClaveDePedimento="A1" TotalUSD="5812.85" MotivoTraslado="99" >
-      <cce20:Emisor Curp="RAHR770621HDGNRM04">
-        <cce20:Domicilio Calle="BAMBU" CodigoPostal="88290" Estado="TAM" Localidad="06" Municipio="027" Pais="MEX"/>
-      </cce20:Emisor>
-      <cce20:Destinatario Nombre="BMW LCX" NumRegIdTrib="273156698">
-        <cce20:Domicilio Calle="FREEMAN FARM RD" CodigoPostal="29651" Estado="SC" Localidad="GREER" Pais="USA"/>
-      </cce20:Destinatario>
-      <cce20:Mercancias>
-        <cce20:Mercancia CantidadAduana="1.000" FraccionArancelaria="3923100301" NoIdentificacion="A82-6208811" UnidadAduana="01" ValorDolares="130.00" ValorUnitarioAduana="130.00"/>
-        <cce20:Mercancia CantidadAduana="8.000" FraccionArancelaria="3923100301" NoIdentificacion="B08-6208803" UnidadAduana="01" ValorDolares="1055.68" ValorUnitarioAduana="131.96"/>
-        <cce20:Mercancia CantidadAduana="3.000" FraccionArancelaria="3923100301" NoIdentificacion="S24-6208970" UnidadAduana="01" ValorDolares="214.50" ValorUnitarioAduana="71.50"/>
-        <cce20:Mercancia CantidadAduana="4.000" FraccionArancelaria="3923100301" NoIdentificacion="S26-6208306" UnidadAduana="01" ValorDolares="598.00" ValorUnitarioAduana="149.50"/>
-        <cce20:Mercancia CantidadAduana="7.000" FraccionArancelaria="3923100301" NoIdentificacion="S92-6208826" UnidadAduana="01" ValorDolares="972.16" ValorUnitarioAduana="138.88"/>
-        <cce20:Mercancia CantidadAduana="3.000" FraccionArancelaria="3923100301" NoIdentificacion="V12-6218025" UnidadAduana="01" ValorDolares="276.03" ValorUnitarioAduana="92.01"/>
-        <cce20:Mercancia CantidadAduana="7.000" FraccionArancelaria="3923100301" NoIdentificacion="V24-6209087" UnidadAduana="01" ValorDolares="2060.24" ValorUnitarioAduana="294.32"/>
-        <cce20:Mercancia CantidadAduana="4.000" FraccionArancelaria="3923100301" NoIdentificacion="S83-6209071" UnidadAduana="01" ValorDolares="506.24" ValorUnitarioAduana="126.56"/>
-      </cce20:Mercancias>
-    </cce20:ComercioExterior>
+    <cartaporte31:CartaPorte IdCCP="CCC7206F-AA8F-437E-A7B1-669D778BF015" TranspInternac="Sí" EntradaSalidaMerc="Salida" PaisOrigenDestino="USA" ViaEntradaSalida="01" TotalDistRec="1" Version="3.1">
+      <cartaporte31:RegimenesAduaneros>
+        <cartaporte31:RegimenAduaneroCCP RegimenAduanero="EXD"/>
+      </cartaporte31:RegimenesAduaneros>
+      <cartaporte31:Ubicaciones>
+        <cartaporte31:Ubicacion TipoUbicacion="Origen" IDUbicacion="OR020228" RFCRemitenteDestinatario="MASO451221PM4" NombreRemitenteDestinatario="MARIA OLIVIA MARTINEZ SAGAZ" FechaHoraSalidaLlegada="2024-11-06T15:11:44">
+          <cartaporte31:Domicilio CodigoPostal="37000" Colonia="1021" Estado="GUA" Localidad="07" Municipio="020" Pais="MEX"/>
+        </cartaporte31:Ubicacion>
+        <cartaporte31:Ubicacion TipoUbicacion="Destino" IDUbicacion="DE020229" RFCRemitenteDestinatario="XEXX010101000" NombreRemitenteDestinatario="SALBO LOGISTICS LLC" NumRegIdTrib="123221" ResidenciaFiscal="USA" FechaHoraSalidaLlegada="2024-11-06T15:11:44" DistanciaRecorrida="1">
+          <cartaporte31:Domicilio CodigoPostal="78045" Estado="TX" Municipio="120142" Pais="USA"/>
+        </cartaporte31:Ubicacion>
+      </cartaporte31:Ubicaciones>
+      <cartaporte31:Mercancias NumTotalMercancias="1" PesoBrutoTotal="500" UnidadPeso="KGM">
+        <cartaporte31:Mercancia BienesTransp="12164600" Descripcion="PLASTICO XYZ" Cantidad="10.000000" ClaveUnidad="XKI" Unidad="Kit" Moneda="MXN" PesoEnKg="500" ValorMercancia="3000" TipoMateria="01"/>
+        <cartaporte31:Autotransporte NumPermisoSCT="1212ASDA12212" PermSCT="TPAF01">
+          <cartaporte31:IdentificacionVehicular AnioModeloVM="2019" PesoBrutoVehicular="1" ConfigVehicular="C3R2" PlacaVM="GK3426A"/>
+          <cartaporte31:Seguros AseguraRespCivil="GNP" PolizaRespCivil="00000304851165"/>
+          <cartaporte31:Remolques>
+            <cartaporte31:Remolque Placa="45UE7U" SubTipoRem="CTR007"/>
+          </cartaporte31:Remolques>
+        </cartaporte31:Autotransporte>
+      </cartaporte31:Mercancias>
+      <cartaporte31:FiguraTransporte>
+        <cartaporte31:TiposFigura TipoFigura="01" RFCFigura="DUMD820923E54" NumLicencia="123456789A" NombreFigura="ALFONSO ERICK LUVIANO HEREDIA"/>
+      </cartaporte31:FiguraTransporte>
+    </cartaporte31:CartaPorte>
   </cfdi:Complemento>
 </cfdi:Comprobante>
-=======
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:pago20="http://www.sat.gob.mx/Pagos20" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd" Version="4.0" Serie="CP" Folio="2226" Fecha="2024-10-31T15:48:00" Sello="OMmCKLv2tAs0KdT5kObl9L7JltOw2dkIbbyNCNM8GLShM1IAgytxFFORPv0bsIc4MvkQeqWImq1AOTViTzDe790mhYqKzW3+lbW22cM0rH9k++0wcpWuylt3XKXLKmpI2R4/7JwsTuVqYp8yxpSVJaz90/acSAJLn27voU/AKCrxv/2cvdQBKxSRjDYC73uggvnM3fXOeseiby68xWv21RNNWSE9CyHqUIs6TuovigFiXswyInNYX2umzFJJMJn+vKD84fAP2KzaasVBCuBSN9C/0IThwnCHCVhAN2/XFKjNd9Ie32ELu1Ihr7cBejGwryABJIwjtjHAeoHRNB2ufA==" NoCertificado="00001000000701112735" Certificado="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" SubTotal="0" Moneda="XXX" Total="0" TipoDeComprobante="P" Exportacion="01" LugarExpedicion="92018">
-   <cfdi:Emisor Rfc="EME860612TQ9" Nombre="VIBRANTZ ERACHEM MEXICO" RegimenFiscal="601"/>
-   <cfdi:Receptor Rfc="XEXX010101000" Nombre="VIBRANTZ SPECIALTY PRODUCTS LLC" UsoCFDI="CP01" RegimenFiscalReceptor="616" DomicilioFiscalReceptor="92018"/>
-   <cfdi:Conceptos>
-      <cfdi:Concepto ClaveProdServ="84111506" ClaveUnidad="ACT" Cantidad="1" Descripcion="Pago" ValorUnitario="0" Importe="0" ObjetoImp="01"/>
-   </cfdi:Conceptos>
-   <cfdi:Complemento>
-      <pago20:Pagos Version="2.0">
-         <pago20:Totales TotalTrasladosBaseIVA0="6173259.62" TotalTrasladosImpuestoIVA0="0" MontoTotalPagos="6173259.62"/>
-         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="104910.00" CtaBeneficiario="0981000681">
-            <pago20:DoctoRelacionado IdDocumento="164F1CCE-3936-54F1-A9A3-19DAA1EBE2D7" Serie="F" Folio="10209" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="104910.00" ImpPagado="104910.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
-               <pago20:ImpuestosDR>
-                  <pago20:TrasladosDR>
-                     <pago20:TrasladoDR BaseDR="59670.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
-                     <pago20:TrasladoDR BaseDR="45240.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
-                  </pago20:TrasladosDR>
-               </pago20:ImpuestosDR>
-            </pago20:DoctoRelacionado>
-            <pago20:ImpuestosP>
-               <pago20:TrasladosP>
-                  <pago20:TrasladoP BaseP="104910.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
-               </pago20:TrasladosP>
-            </pago20:ImpuestosP>
-         </pago20:Pago>
-         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="15238.00" CtaBeneficiario="0981000681">
-            <pago20:DoctoRelacionado IdDocumento="5A25CD5C-7E38-5528-9058-DE8CD3EE4229" Serie="F" Folio="10264" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="15238.00" ImpPagado="15238.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
-               <pago20:ImpuestosDR>
-                  <pago20:TrasladosDR>
-                     <pago20:TrasladoDR BaseDR="15238.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
-                  </pago20:TrasladosDR>
-               </pago20:ImpuestosDR>
-            </pago20:DoctoRelacionado>
-            <pago20:ImpuestosP>
-               <pago20:TrasladosP>
-                  <pago20:TrasladoP BaseP="15238.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
-               </pago20:TrasladosP>
-            </pago20:ImpuestosP>
-         </pago20:Pago>
-         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="99720.00" CtaBeneficiario="0981000681">
-            <pago20:DoctoRelacionado IdDocumento="CECA825C-AD66-5D81-8B45-AA1768278290" Serie="F" Folio="10291" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="99720.00" ImpPagado="99720.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
-               <pago20:ImpuestosDR>
-                  <pago20:TrasladosDR>
-                     <pago20:TrasladoDR BaseDR="99720.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
-                  </pago20:TrasladosDR>
-               </pago20:ImpuestosDR>
-            </pago20:DoctoRelacionado>
-            <pago20:ImpuestosP>
-               <pago20:TrasladosP>
-                  <pago20:TrasladoP BaseP="99720.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
-               </pago20:TrasladosP>
-            </pago20:ImpuestosP>
-         </pago20:Pago>
-         <pago20:Pago FechaPago="2024-10-04T12:00:00" FormaDePagoP="03" MonedaP="USD" TipoCambioP="19.3885" Monto="98530.00" CtaBeneficiario="0981000681">
-            <pago20:DoctoRelacionado IdDocumento="CD366CAC-4FA5-5D26-B0B1-F2EEC0D60DA9" Serie="F" Folio="10294" MonedaDR="USD" EquivalenciaDR="1" NumParcialidad="2" ImpSaldoAnt="98530.00" ImpPagado="98530.00" ImpSaldoInsoluto="0.00" ObjetoImpDR="02">
-               <pago20:ImpuestosDR>
-                  <pago20:TrasladosDR>
-                     <pago20:TrasladoDR BaseDR="98530.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000" ImporteDR="0.00"/>
-                  </pago20:TrasladosDR>
-               </pago20:ImpuestosDR>
-            </pago20:DoctoRelacionado>
-            <pago20:ImpuestosP>
-               <pago20:TrasladosP>
-                  <pago20:TrasladoP BaseP="98530.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000" ImporteP="0.000000"/>
-               </pago20:TrasladosP>
-            </pago20:ImpuestosP>
-         </pago20:Pago>
-      </pago20:Pagos>
-   </cfdi:Complemento>
-</cfdi:Comprobante>
->>>>>>> 53100b37b60d0b101576f14f3de2a81d96ba994a

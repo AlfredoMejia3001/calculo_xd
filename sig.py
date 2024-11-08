@@ -1,8 +1,42 @@
+from datetime import datetime
 from suds.client import Client
 import logging
 import base64
- 
+from lxml import etree
 
+
+xml="prueba.xml"
+xml_string = open(
+    xml, "rb").read()
+xml_etree = etree.fromstring(xml_string)
+namespaces = {
+    'cfdi': 'http://www.sat.gob.mx/cfd/4',
+    'tfd': 'http://www.sat.gob.mx/TimbreFiscalDigital',
+    'pago20': 'http://www.sat.gob.mx/Pagos20',
+    'cce20': 'http://www.sat.gob.mx/ComercioExterior20',
+    'nomina': 'http://www.sat.gob.mx/nomina12',
+    'cartaporte31': 'http://www.sat.gob.mx/CartaPorte31',
+    's0': 'apps.services.soap.core.views'
+}
+fecha = datetime.now()
+fecha = fecha.strftime('%Y-%m-%dT%H:%M:%S')
+rfc="EKU9003173C9"
+name="ESCUELA KEMPER URGATE"
+regi="601"
+xml_etree.set("Fecha", fecha)
+xml_etree.set("NoCertificado", '30001000000500003416')
+nodo = xml_etree.xpath(".//cfdi:Emisor", namespaces=namespaces)
+if nodo:  # Check if the list is not empty
+    emisor = nodo[0]  # Get the first matching node
+    emisor.set('Rfc', str(rfc))
+    emisor.set('Nombre', str(name))
+    emisor.set('RegimenFiscal', str(regi))
+
+
+with open("prueba.xml", "wb") as f:
+        f.write(etree.tostring(xml_etree, pretty_print=True,
+                xml_declaration=True, encoding='UTF-8'))
+    
 # Usuario y contraseña, asignados por FINKOK
 username = 'amejia@finkok.com.mx'
 password = 'yN8Q4vp,LPQQ6*y'
@@ -28,6 +62,5 @@ def timbrar(xml):
     with open('response.xml', 'w') as res_file:
         res_file.write(str(client.last_received()))
 
-xml="prueba.xml"
 
 timbrar(xml)
