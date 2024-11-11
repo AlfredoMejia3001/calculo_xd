@@ -1,10 +1,7 @@
-
 from datetime import datetime, timedelta
 from decimal import Decimal
 from lxml import etree
 from colorama import Fore, Style
-import math
-import requests
 from decimal import ROUND_HALF_UP
 
 xml_string = open(
@@ -31,6 +28,8 @@ if nodo:  # Check if the list is not empty
     emisor.set('Rfc', str(rfc))
     emisor.set('Nombre', str(name))
     emisor.set('RegimenFiscal', str(regi))
+
+
 def redondeo(valor):
     # Convertir el valor a cadena con dos decimales
     valor_str = f"{valor:.5f}"
@@ -51,6 +50,8 @@ def redondeo(valor):
     else:
         # Regla 4: Si el penúltimo número es impar, redondear al alza
         return Decimal(valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
+    
+
 def valor_unitario():
     valor_unitario = xml_etree.xpath("//cfdi:Conceptos/cfdi:Concepto/@ValorUnitario", namespaces=namespaces)
     total_otros_pagos = xml_etree.xpath("//nomina12:Nomina/@TotalOtrosPagos", namespaces=namespaces)
@@ -65,6 +66,8 @@ def valor_unitario():
         print("si son iguales val uni")
         
     print("suma:",suma)
+
+
 def importe():
     imp = xml_etree.xpath("//cfdi:Conceptos/cfdi:Concepto/@Importe", namespaces=namespaces)
     total_otros_pagos = xml_etree.xpath("//nomina12:Nomina/@TotalOtrosPagos", namespaces=namespaces)
@@ -79,6 +82,8 @@ def importe():
         print("si son iguales")
         
     print("suma:",suma)
+
+
 def descuento ():
     desc = xml_etree.xpath("//cfdi:Conceptos/cfdi:Concepto/@Descuento", namespaces=namespaces)
     total_deduciones = xml_etree.xpath("//nomina12:Nomina/@TotalDeducciones", namespaces=namespaces)
@@ -157,7 +162,6 @@ def monto_recurso_propio():
         print("son iguales")
 
 
-
 def total_sueldos():
     total_sueldos = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/@TotalSueldos", namespaces=namespaces)
     ImporteGravado = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/nomina12:Percepcion/@ImporteGravado", namespaces=namespaces)
@@ -194,7 +198,6 @@ def total_separacion():
         print("son iguales")
 
 
-
 def total_jubilacion():
     total_jubilacion = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/@TotalJubilacionPensionRetiro", namespaces=namespaces)
     ImporteGravado = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/nomina12:Percepcion/@ImporteGravado", namespaces=namespaces)
@@ -211,6 +214,7 @@ def total_jubilacion():
         print("no son iguales")
     else:
         print("son iguales")
+
 
 def total_gravado():
     total_gravado = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/@TotalGravado", namespaces=namespaces)
@@ -231,7 +235,6 @@ def total_gravado():
         print("son iguales")
     
     
-
 def total_excemto():
     total_excento = xml_etree.xpath("//nomina12:Nomina/nomina12:Percepciones/@TotalExento", namespaces=namespaces)
 
@@ -250,4 +253,24 @@ def total_excemto():
     else:
         print("son iguales")
     
-    
+
+def total_imp_reten_deduc():
+    total_impuestos_retenidos = xml_etree.xpath("//nomina12:Deducciones/@TotalImpuestosRetenidos", namespaces=namespaces)    
+    deducciones_002 = xml_etree.xpath("//nomina12:Deducciones/nomina12:Deduccion[@TipoDeduccion='002']/@Importe", namespaces=namespaces)
+
+    suma_deducciones_002 = sum(float(importe) for importe in deducciones_002)
+
+    if total_impuestos_retenidos:
+        total_impuestos_retenidos = float(total_impuestos_retenidos[0]) 
+        if total_impuestos_retenidos == suma_deducciones_002:
+            print(f"La validación es correcta: total impuestos {total_impuestos_retenidos} suma de los importes {suma_deducciones_002}")
+        else:
+            print(f"Error: El TotalImpuestosRetenidos ({total_impuestos_retenidos}) no coincide con la suma de deducciones TipoDeduccion=002 ({suma_deducciones_002}).")
+    else:
+        if deducciones_002:
+            print("Error: No se debe incluir TotalImpuestosRetenidos cuando no hay deducciones con TipoDeduccion=002.")
+        else:
+            print("No hay deducciones TipoDeduccion=002 y no se debe incluir el atributo TotalImpuestosRetenidos.")
+
+
+total_imp_reten_deduc()
