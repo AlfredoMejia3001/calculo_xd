@@ -3,8 +3,10 @@ from decimal import Decimal
 from lxml import etree
 from colorama import Fore, Style
 
+
 xml_string = open('prueba2.xml', 'rb').read()
 xml_etree = etree.fromstring(xml_string)
+
 
 namespaces = {
     'cfdi': 'http://www.sat.gob.mx/cfd/4',
@@ -34,12 +36,11 @@ if nodo:
     emisor.set('RegimenFiscal', str(regi))
 
 
-def realizar_calculos_cartaporte31(namespaces):
-    if xml_etree.xpath('.//cartaporte31:Mercancias/cartaporte31:Autotransporte', namespaces=namespaces):
+def pesoBrutoTotal(namespaces):
+    if xml_etree.xpath('.//cartaporte31:Mercancias/cartaporte31:Autotransporte', namespaces=namespaces) or xml_etree.xpath('.//cartaporte31:Mercancias/cartaporte31:TransporteAereo' or xml_etree.xpath(".//cartaporte31:Mercancias/cartaporte31:TransporteFerroviario")):
         pesoKG=xml_etree.xpath('.//cartaporte31:Mercancias/cartaporte31:Mercancia/@PesoEnKg', namespaces=namespaces)
         pesoBrutoTotal= xml_etree.xpath('.//cartaporte31:Mercancias/@PesoBrutoTotal', namespaces=namespaces)
         suma_peso = sum(float(peso) for peso in pesoKG)
-        
         if suma_peso != float(pesoBrutoTotal[0]):
             suma_pesoSTR=int(suma_peso)
             if suma_pesoSTR != int(pesoBrutoTotal[0]):
@@ -85,6 +86,7 @@ def realizar_calculos_cartaporte31(namespaces):
             print('Los pesos coinciden neto 1')
             print(f"{suma_pesoN} = {float(pesoNetoTotal[0])}")      
 
+
 def NumTotalMercancias(namespaces):           
     mercancias = xml_etree.xpath(".//cartaporte31:Mercancias/cartaporte31:Mercancia", namespaces=namespaces)
     cantidad=len(mercancias)
@@ -120,3 +122,7 @@ def total_dist(namespaces):
     total_dist = sum(float(dist) for dist in distancia_recorrida)
     print(total_dist, "km")
 
+def condicion_carta():
+    
+    
+    print
