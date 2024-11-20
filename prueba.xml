@@ -1,22 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?>
-<cfdi:Comprobante xmlns:nomina12="http://www.sat.gob.mx/nomina12" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/nomina12 http://www.sat.gob.mx/sitio_internet/cfd/nomina/nomina12.xsd" Version="4.0" Serie="Serie" Folio="Folio" Fecha="2024-03-01T00:00:00" Sello="ffUk73LhCYydULkBZyt+dKov5eEd5FKw+DvrfxtwR2GMdmPObqZXM0kv94ReMTyM1r69gSZpJbtVrouXF/sUZWhKyUQtKg4AQCXlg97bAgpIpzTlOBVp6xRE81+fJo4L+8tQQvqhYbc9yd0Crdgr+zeeNZIa8rbrPOWdoDxQSfrGHmyLJjYlMjvW5Fe+uzIRs/b12cCwjHjPMXtcKDo+RvNhJLCF63bcZ9yvWHz6pURFZLcDAi9I7TUmfc+2rTPRGIwyqt0vu9tDeiJj9QKLZOJXe2TPLakTZdKkVElDjsSxzRjJXNBGUnsD/ShRwWPWe/lQrsWHmz3SjCafzO1kqw==" SubTotal="5000" Descuento="300" Moneda="MXN" Total="4700" TipoDeComprobante="N" Exportacion="01" MetodoPago="PUE" LugarExpedicion="20000" xmlns:cfdi="http://www.sat.gob.mx/cfd/4" NoCertificado="30001000000500003416" Certificado="MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=">
-  <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601" />
-  <cfdi:Receptor Rfc="XOJI740919U48" Nombre="INGRID XODAR JIMENEZ" DomicilioFiscalReceptor="76028" RegimenFiscalReceptor="605" UsoCFDI="CN01" />
+<?xml version='1.0' encoding='UTF-8'?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd" Version="4.0" Serie="HCA" Folio="1687" Fecha="2024-11-20T16:29:14" FormaPago="01" NoCertificado="30001000000500003416" Certificado="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" CondicionesDePago="CONTADO" SubTotal="3665.40" Descuento="0.00" Moneda="MXN" TipoCambio="1" Total="4112.49" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="29000" Sello="R3EFTJltF/7hdHoiUqVGLAlnYsjMNKsEpz9ROnM7zR/8ldaIX2oQgaMxVHoz4GIDvjTj7/TFaSZF3odiy0/fZHFdlGoi7WEscnOUmBKUf+gHy1XpvmCS4oj2Fvtw3cZzW66yPRj7BKYzEduuUPm43nRBYMJXJJFtNa70CiguCGZlJig4WIJI5Zy6K3GSt+9eZKhRHc2rmWWCEoslbPJ6QuxG2BxRTMdVLpCYPEoHeoRZXxCJFG+pq6lXjwLanh8zCJmGImZldHVNBQUihevSiodZzHPrYd1rBZWLmYjGZHjwwLT/uJaZTFB4jmVhe05HlL9KpMUe1lB42oJ7Kbc6UA==">
+  <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
+  <cfdi:Receptor Rfc="XAXX010101000" Nombre="RAMON GUILLEN PADILLA" DomicilioFiscalReceptor="29000" RegimenFiscalReceptor="616" UsoCFDI="S01"/>
   <cfdi:Conceptos>
-    <cfdi:Concepto ClaveProdServ="84111505" Cantidad="1" ClaveUnidad="ACT" Descripcion="Pago de nómina" ValorUnitario="5000.00" Descuento="300" Importe="5000.00" ObjetoImp="01"></cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS47" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="CONSULTA NOCTURNA (FIN DE SEMANA, DIA FESTIVO)" ValorUnitario="700.000000" Importe="700.000000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="700.000000" Impuesto="002" TipoFactor="Exento"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS89" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="URGENCIAS 2" ValorUnitario="603.450000" Importe="603.450000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="603.450000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="96.55"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP374" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="NORMOGOTERO (FLEBOTEK EQUIPO P/VENOCLISIS S/AGUJA)" ValorUnitario="41.080000" Importe="41.080000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="41.080000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="6.57"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP367" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="CATETER INTRAVENOSO DE POLIURETANO RADIOPACO ESTERIL (VEINCAT 18G )" ValorUnitario="45.600000" Importe="45.600000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="45.600000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="7.3"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP777" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="TEGADERM I.V ADVANCED 6.5X7 1683" ValorUnitario="54.540000" Importe="54.540000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="54.540000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="8.73"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP396" Cantidad="2" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="JERINGA DE PLASTICO DESECHABLE DE 20 ML SIN AGUJA" ValorUnitario="19.000000" Importe="38.000000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="38.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="6.08"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP323" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="AGUJAS HIPODERMICAS CAL. 18GX32G (ROSA)" ValorUnitario="5.000000" Importe="5.000000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.800000"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP323" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="AGUJAS HIPODERMICAS CAL. 18GX32G (ROSA)" ValorUnitario="5.000000" Importe="5.000000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="0.800000"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP274" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="SOL. HARTMAN FRASCO DE 500 ML" ValorUnitario="116.720000" Importe="116.720000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="116.720000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.000000"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP115" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="HIDROCORTISONA 100 MG SOLUCION INYECTABLE" ValorUnitario="75.400000" Importe="75.400000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="75.400000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.000000"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP111" Cantidad="1" ClaveUnidad="H87" Unidad="PIEZA" Descripcion="HALOPERIDOL 5 MG/MLSOLUCION INYECTABLE" ValorUnitario="96.440000" Importe="96.440000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="96.440000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.000000"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLP1258" Cantidad="1" ClaveUnidad="XBX" Unidad="CAJA" Descripcion="METOPROLOL (KENAPROL) 100MG CAJA CON 20 TAB" ValorUnitario="41.270000" Importe="41.270000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="41.270000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="6.6"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS122" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="BIOMETRIA HEMATICA" ValorUnitario="183.410000" Importe="183.410000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="183.410000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="29.35"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS532" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="ELECTROLITOS SERICOS (NA, K, CL)" ValorUnitario="392.240000" Importe="392.240000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="392.240000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="62.76"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS380" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="ANTIDOPING (6 ELEMENTOS)" ValorUnitario="689.660000" Importe="689.660000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="689.660000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="110.35"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="SLS679" Cantidad="1" ClaveUnidad="E48" Unidad="SERVICIO" Descripcion="QUIMICA SANGUINEA DE 6 ELEMENTOS" ValorUnitario="577.590000" Importe="577.590000" Descuento="0.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="577.590000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="92.414400"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
   </cfdi:Conceptos>
-  <cfdi:Complemento>
-    <nomina12:Nomina Version="1.2" TipoNomina="O" FechaPago="2023-05-24" FechaInicialPago="2023-05-09" FechaFinalPago="2023-05-24" NumDiasPagados="15" TotalPercepciones="5000.0" TotalDeducciones="300">
-      <nomina12:Emisor RegistroPatronal="B5510768108" RfcPatronOrigen="URE180429TM6" />
-      <nomina12:Receptor Curp="XEXX010101HNEXXXA4" NumSeguridadSocial="000000" FechaInicioRelLaboral="2015-01-01" Antigüedad="P437W" TipoContrato="01" TipoJornada="01" TipoRegimen="03" NumEmpleado="120" Departamento="Desarrollo" Puesto="Ingeniero de Software" RiesgoPuesto="1" PeriodicidadPago="04" CuentaBancaria="1111111111" Banco="002" SalarioBaseCotApor="490.22" SalarioDiarioIntegrado="146.47" ClaveEntFed="JAL" />
-      <nomina12:Percepciones TotalSueldos="5000.0" TotalGravado="2808.8" TotalExento="2191.2">
-        <nomina12:Percepcion TipoPercepcion="001" Clave="00500" Concepto="Sueldos, Salarios Rayas y Jornales" ImporteGravado="2808.8" ImporteExento="2191.2" />
-      </nomina12:Percepciones>
-      <nomina12:Deducciones TotalOtrasDeducciones="200" TotalImpuestosRetenidos="100">
-        <nomina12:Deduccion TipoDeduccion="001" Clave="00301" Concepto="Seguridad Social" Importe="200" />
-        <nomina12:Deduccion TipoDeduccion="002" Clave="00302" Concepto="ISR" Importe="100" />
-      </nomina12:Deducciones>
-    </nomina12:Nomina>
-    <tfd:TimbreFiscalDigital xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="1ac10691-e5c5-422f-9ec0-0aafe486d493" FechaTimbrado="2024-03-01T10:13:19" RfcProvCertif="SPR190613I52" SelloCFD="ffUk73LhCYydULkBZyt+dKov5eEd5FKw+DvrfxtwR2GMdmPObqZXM0kv94ReMTyM1r69gSZpJbtVrouXF/sUZWhKyUQtKg4AQCXlg97bAgpIpzTlOBVp6xRE81+fJo4L+8tQQvqhYbc9yd0Crdgr+zeeNZIa8rbrPOWdoDxQSfrGHmyLJjYlMjvW5Fe+uzIRs/b12cCwjHjPMXtcKDo+RvNhJLCF63bcZ9yvWHz6pURFZLcDAi9I7TUmfc+2rTPRGIwyqt0vu9tDeiJj9QKLZOJXe2TPLakTZdKkVElDjsSxzRjJXNBGUnsD/ShRwWPWe/lQrsWHmz3SjCafzO1kqw==" NoCertificadoSAT="30001000000500003456" SelloSAT="fZHrbWw7C1IAwFL18g5ywQh/5qE8ehrLSdQ4NIdSg2VxyhFy2IpE52nDp8WJ6s9LeGUWqUKfvPudm3/6eGJzME6bUSaZ/+lSLwV6VLm6oNBt3Ik3QLBxgcU+44hoNgJOslgnpEqA4hvzDkbBgIZs0DqlveENhXnJAjphJ+9vDMhZ0BF5AaW4LENSKgniAsOHfgXKRQ54ZA2TjVVsfBOElUH5K8dEpCl1SJ5d4EZJAD0tZnTbB03wDya7xieYzPAO9tkzdj8EU+coksimpArN20X9gQzN/1a9FXkVnKFc6PFTjWMcTxUSuak07Vyf0X1ru5ETxpAmigYSF4+e1TFmbg==" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
-  </cfdi:Complemento>
+  <cfdi:Impuestos TotalImpuestosTrasladados="447.09">
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="2635.57" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="421.69"/>
+      <cfdi:Traslado Base="329.83" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.00"/>
+      <cfdi:Traslado Base="700.00" Impuesto="002" TipoFactor="Exento"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
 </cfdi:Comprobante>
